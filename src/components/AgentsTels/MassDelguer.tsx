@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { DataTable } from "../DataTable";
 import { MassDeleguercolumns } from "./MassDelgueCol";
+import { ScrollArea } from "../ui/scroll-area";
 
 // Titre dynamique
 interface TitleProps {
@@ -55,23 +56,42 @@ const MassDelguer = ({ title }: TitleProps) => {
     }, [status, session?.user?.id]);
 
     return (
-        <div className="bg-white w-full h-max rounded p-4 shadow-blue">
+        <div className=" w-full h-max rounded p-4 shadow-blue ">
             <h1 className="text-center capitalize p-4 text-blue font-semibold">
                 Liste de contacts
             </h1>
 
-            {loading || status === "loading" ? (
-                <div className="flex justify-center items-center py-6">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-slate-500 border-solid border-transparent"></div>
-                    <small className="ml-2">Chargement...</small>
+            <div className="flex gap-4">
+                {/* c'est la partie tableau  */}
+                <div className="bg-white w-[50%] h-max rounded p-4 shadow-blue">
+                    {loading || status === "loading" ? (
+                        <div className="flex justify-center items-center py-6">
+                            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-slate-500 border-solid border-transparent"></div>
+                            <small className="ml-2">Chargement...</small>
+                        </div>
+                    ) : (
+                        <DataTable
+                            data={contacts}
+                            columns={MassDeleguercolumns}
+                            typeName="Nom"
+                        />
+                    )}
                 </div>
-            ) : (
-                <DataTable
-                    data={contacts}
-                    columns={MassDeleguercolumns}
-                    typeName="Nom"
-                />
-            )}
+                {/* c'est la partie script */}
+                <ScrollArea className="bg-white w-[50%] h-[446px] rounded shadow-blue overflow-hidden">
+                    <h1 className="text-center capitalize p-4 text-blue font-semibold">
+                        Script
+                    </h1>
+                    <div className="w-full h-full text-blue p-4">
+                        {contacts && contacts.length > 0 ? (
+                            <div>{contacts[0].script}</div>
+                        ) : (
+                            <div>Il n'y a aucun contact pour le moment.</div>
+                        )}
+                    </div>
+
+                </ScrollArea>
+            </div>
         </div>
     );
 };

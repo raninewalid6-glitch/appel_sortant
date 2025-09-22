@@ -75,13 +75,14 @@ export const MassDeleguercolumns: ColumnDef<User>[] = [
         header: "Telephone",
     },
     {
-        accessorKey: "localite",
-        header: "localité",
-    },
-    {
         accessorKey: "region",
         header: "Region",
     },
+    {
+        accessorKey: "localite",
+        header: "localité",
+    },
+
     {
         id: "actions",
         header: "Actions",
@@ -102,15 +103,75 @@ export const MassDeleguercolumns: ColumnDef<User>[] = [
                 <div className="flex gap-2">
                     <Dialog>
                         <DialogTrigger className="w-full bg-blue text-blanc hover:bg-blue/90 hover:text-blanc duration-500 rounded-lg p-1">
-                            Mass deleguer
+                            Qualifier
                         </DialogTrigger>
-                        <DialogContent className="bg-blanc max-w-[900px] ">
+                        <DialogContent className="bg-blanc">
                             <DialogHeader>
-                                <DialogTitle className="text-blue text-2xl mb-1 ml-[15%]">Mass delguer</DialogTitle>
+                                <DialogTitle className="text-blue text-2xl mb-1 ml-[15%]">Qualification</DialogTitle>
                             </DialogHeader>
-                            <DialogDescription className="w-full">
-                                <div className="w-full mx-auto">
-                                   en developpement
+                            <DialogDescription>
+                                <div className="w-full max-w-xs mx-auto">
+                                    <Form {...form}>
+                                        <form onSubmit={form.handleSubmit((values) => onSubmit(values, user.id))}>
+                                            {/* Qualifier Field */}
+                                            <div className="mb-4">
+                                                <FormField
+                                                    control={form.control}
+                                                    name="qualifier"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel className="text-blue py-4">Qualifier</FormLabel>
+                                                            <FormControl>
+                                                                <Select {...field} onValueChange={(value) => field.onChange(value)} disabled={isPending}>
+                                                                    <SelectTrigger className="shadow border border-blue rounded-[10px] w-full py-2 px-3 text-blue leading-tight focus:outline-none focus:shadow-outline">
+                                                                        <SelectValue placeholder="Sélectionner une qualification" />
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        <SelectItem value="indisponible">Indisponible</SelectItem>
+                                                                        <SelectItem value="abouti">Abouti</SelectItem>
+                                                                        <SelectItem value="repondu">Répondu</SelectItem>
+                                                                        <SelectItem value="rappeller">Rappeler</SelectItem>
+                                                                    </SelectContent>
+                                                                </Select>
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>)}
+                                                />
+                                            </div>
+                                            {/* Commentaire */}
+                                            <div className="mb-4">
+                                                <FormField
+                                                    control={form.control}
+                                                    name="commentaire"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel className="text-blue">Commentaire</FormLabel>
+                                                            <FormControl>
+                                                                <textarea
+                                                                    {...field}
+                                                                    className="shadow border rounded-[10px] border-blue w-full py-2 px-3 text-blue mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                                                                    placeholder="Commentaire"
+                                                                    disabled={isPending}
+                                                                />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>)}
+                                                />
+                                            </div>
+                                            {/* Status Messages */}
+                                            <div className="mb-4">
+                                                <FormSucces message={successMessage} />
+                                                <FormError message={errorMessage} />
+                                            </div>
+
+                                            {/* Submit Button */}
+                                            <div className="flex items-center">
+                                                <button className="bg-blue hover:bg-blue/80 text-white font-bold py-2 px-4 rounded-[10px] w-full focus:outline-none focus:shadow-outline" type="submit" disabled={isPending}>
+                                                    Enregistrer
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </Form>
                                 </div>
                             </DialogDescription>
                         </DialogContent>
