@@ -1,9 +1,7 @@
-import { useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import CreateCompagne from "../FormCompagne";
 import { ReUsableDataTableCrud } from "../ReUsableDataTableCrud";
-import { CompagneColumns, CompagneData } from "../Superviseur/Culumns/CulumnsCompagner";
-import * as z from "zod";
-import { CompagneSchema } from "@/Schemas";
+import { CompagneColumns } from "../Superviseur/Culumns/CulumnsCompagner";
 import { useAppContext } from "../context/AppContext";
 
 export default function CrudCompagner() {
@@ -11,7 +9,7 @@ export default function CrudCompagner() {
     const [isPending, startTransition] = useTransition();
     const {CompaData, SetCompaData,onSubmitCompagne, successMessage, errorMessage,setSuccessMessage,setErrorMessage, } = useAppContext();
     // Récupérer les compagnes
-    const fetchCompagne = async () => {
+    const fetchCompagne = useCallback(async () => {
         const apiUrl = `http://192.168.100.4:8080/Vox_Backend//api.php?method=Compagnes`;
         try {
             const response = await fetch(apiUrl, {
@@ -32,14 +30,14 @@ export default function CrudCompagner() {
         } finally {
             setLoading(false); // Désactiver le chargement
         }
-    };
+    }, [SetCompaData, setErrorMessage]);
 
    
 
 
     useEffect(() => {
         fetchCompagne();
-    }, []); // Ne pas inclure `onSubmit` dans les dépendances, car cela provoquerait des requêtes infinies
+    }, [fetchCompagne]); // Ne pas inclure `onSubmit` dans les dépendances, car cela provoquerait des requêtes infinies
 
     return (
         <div>
@@ -54,15 +52,14 @@ export default function CrudCompagner() {
                     columns={CompagneColumns}
                     typeName="Nom"
                     poptitle="Ajouter une compagne"
-                    children={
-                        <CreateCompagne
-                            successMessage={successMessage}
-                            errorMessage={errorMessage}
-                            isPending={isPending}
-                            onSubmit={onSubmitCompagne}
-                        />
-                    }
-                />
+                >
+                    <CreateCompagne
+                        successMessage={successMessage}
+                        errorMessage={errorMessage}
+                        isPending={isPending}
+                        onSubmit={onSubmitCompagne}
+                    />
+                </ReUsableDataTableCrud>
             )}
         </div>
     );

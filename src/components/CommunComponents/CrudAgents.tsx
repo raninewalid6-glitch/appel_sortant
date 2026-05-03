@@ -1,10 +1,8 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import CreateUser from "../FormUser";
 import { ReUsableDataTableCrud } from "../ReUsableDataTableCrud";
-import { Agents, AgentsColumns } from "../Superviseur/Culumns/CulumnsAgents";
-import { z } from "zod";
-import { RegisterSchema } from "@/Schemas";
+import { AgentsColumns } from "../Superviseur/Culumns/CulumnsAgents";
 import { useAppContext } from "../context/AppContext";
 
 export default function CrudAgent() {
@@ -12,7 +10,7 @@ export default function CrudAgent() {
     const {UsersData ,SetUsersData,onSubmitUtilisateur,successMessage,errorMessage} = useAppContext();
     //comportement
     //fonction qui permet de recupere les status des apples surtout les appelle positves 
-    const FetchStatus = async () => {
+    const FetchStatus = useCallback(async () => {
         const apiUrl = `http://192.168.100.4:8080/Vox_Backend//api.php?method=AfficherPourSuperviseur`;
         try {
             const response = await fetch(apiUrl, {
@@ -30,14 +28,14 @@ export default function CrudAgent() {
         } catch (error) {
             console.log('Erreur : ', error);
         }
-    }
+    }, [SetUsersData])
     useEffect(() => {
         FetchStatus();
-    }, [])
+    }, [FetchStatus])
     //render
     return (
         <div>
-            <ReUsableDataTableCrud data={UsersData} columns={AgentsColumns} typeName="Nom" poptitle="Ajouter un utilisateur" children={<CreateUser onSubmit={onSubmitUtilisateur} successMessage={successMessage} errorMessage={errorMessage} />} />
+            <ReUsableDataTableCrud data={UsersData} columns={AgentsColumns} typeName="Nom" poptitle="Ajouter un utilisateur"><CreateUser onSubmit={onSubmitUtilisateur} successMessage={successMessage} errorMessage={errorMessage} /></ReUsableDataTableCrud>
         </div>
     )
 }
