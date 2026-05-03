@@ -41,7 +41,7 @@ export default function Content({ title }: TitleProps) {
             ) : path === "/Teleconseiller/Status_des_appels/Rappeller" ? (
                 <Rappeller />
             ) : path === "/Teleconseiller/Mass_delegue" ? (
-                <MassDelguer title={title} />
+                <MassDelguer title="Mass delegue" />
             ) : path === "/Teleconseiller/Status_des_appels/Repondu" ? (
                 <ReponduState />
             ) : path === "/Teleconseiller/Status_des_appels/Indisponible" ? (

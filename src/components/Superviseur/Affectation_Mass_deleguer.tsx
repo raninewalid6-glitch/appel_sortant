@@ -1,24 +1,9 @@
 "use client";
-
-import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  FormControl,
-} from "@/components/ui/form";
+import { affectationSchema, affectationSchemaMassDeleguer } from "@/Schemas";
+import { z } from "zod";
+import { ScrollArea } from "../ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -26,192 +11,301 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-// ✅ Schéma de validation
-const formSchema = z.object({
-  region: z.string().min(1, "La région est obligatoire"),
-  agent: z.string().min(1, "L’agent est obligatoire"),
-});
-
-type FormValues = z.infer<typeof formSchema>;
-
-type Agent = {
-  value: string;
-  label: string;
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useEffect, useState, useTransition } from "react";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { FormError } from "../FormError";
+import { FormSucces } from "../FormSucces";
+// Type facultatif si tu veux typer proprement
+type Compagne = {
+  id?: number | string;
+  Nom?: string;
+  nom?: string;
+  Name?: string;
+  name?: string;
+  [k: string]: any;
 };
 
-// ✅ Liste fixe des régions
-const regions = [
-  { value: "ali-sabieh", label: "Ali-Sabieh" },
-  { value: "dikhil", label: "Dikhil" },
-  { value: "obock", label: "Obock" },
-  { value: "arta", label: "Arta" },
-  { value: "tadjourah", label: "Tadjourah" },
+// 🔵 LISTE DES REGIONS DE DJIBOUTI
+const REGIONS = [
+  { id: "Obock", name: "Obock" },
+  { id: "ALI-SABIEH", name: "ALI-SABIEH" },
+  { id: "arta", name: "Arta" },
+  { id: "dikhil", name: "Dikhil" },
+  { id: "tadjourah", name: "Tadjourah" },
 ];
+export default function Affectation_Mass_deleguer() {
+  // States
+  const [isPending, startTransition] = useTransition();
+  const [agents, setAgents] = useState([]);
+  const [contacts, setContacts] = useState([]);
+  const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const [selectedContacts, setSelectedContacts] = useState([]); // Contacts sélectionnés
+  const [selectCompagner, setSelectCompagner] = useState<Compagne[]>([]);
+  // const [selectCompagner, setselectCompagner] = useState([]);
 
-const Affectation_Mass_deleguer: React.FC = () => {
-  const [agents, setAgents] = useState<Agent[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      region: "",
-      agent: "",
-    },
-  });
-
-  // ✅ Récupération des agents depuis ton API
+  // Fetch agents  logic here...
   const fetchAgents = async () => {
-    const apiUrl =
-      "http://192.168.100.4:8080/Vox_Backend/api.php?method=AfficherPourSuperviseurTele";
-
+    const apiUrl = `http://192.168.100.4:8080/Vox_Backend//api.php?method=AfficherPourSuperviseurTele`;
     try {
-      const response = await fetch(apiUrl, { method: "GET" });
+      const response = await fetch(apiUrl, { method: 'GET' });
 
       if (!response.ok) {
-        console.error("❌ Erreur API");
+        console.error("Erreur lors de l'exécution de la requête.");
         return;
       }
 
       const responseData = await response.json();
 
-      // ✅ Mapping du JSON vers {value, label}
-      const mappedAgents: Agent[] = responseData.map((a: any) => ({
-        value: String(a.id),
-        label: a.Nom,
-      }));
+      if (responseData.error) {
+        console.error("Erreur du serveur:", responseData.error);
+        return;
+      }
 
-      setAgents(mappedAgents);
+      setAgents(responseData);
     } catch (error) {
-      console.error("❌ Erreur récupération agents:", error);
+      console.error("Erreur lors de la récupération des contacts:", error);
     }
   };
 
+  // Fetch contacts logic here...
+  const fetchContacts = async (value) => {
+    const apiUrl = `http://192.168.100.4:8080/Vox_Backend//api.php?method=AfficherContactAujourdhuiParRegion`;
+    try {
+      const playload = {
+        Compagne: "Mass delegue",
+        region: value,
+      }
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(playload),
+      })
+      const responseData = await response.json();
+
+      if (!response.ok || responseData.error) {
+        console.log(responseData.error || "Une erreur réseau a été détectée.");
+        setContacts([]);
+      } else {
+        setContacts(responseData);
+      }
+
+    } catch (error) {
+      console.log('Erreur : ', error);
+    }
+  };
+
+  //le useEffect pour afficher les donnes.
   useEffect(() => {
     fetchAgents();
   }, []);
 
-  // ✅ Soumission du formulaire
-  const onSubmit = async (values: FormValues) => {
-    setLoading(true); // activer le loading
+  // Form initialization
+  const form = useForm<z.infer<typeof affectationSchemaMassDeleguer>>({
+    resolver: zodResolver(affectationSchemaMassDeleguer),
+    defaultValues: {
+      region: "",
+      localiter: "",
+      AgentsId: "",
+      ContactIds: [], // Stocker les IDs des contacts sélectionnés
+    },
+  });
 
-    try {
-      const response = await fetch(
-        "http://192.168.100.4:8080/Vox_Backend/api.php?method=AffectationParRegion",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(values),
-        }
-      );
-
-      const result = await response.json();
-
-      if (result.error) {
-        toast.error(result.error);
-      } else if (result.success) {
-        // ✅ retrouver le nom de l’agent
-        const agentName =
-          agents.find((a) => a.value === values.agent)?.label || values.agent;
-
-        const regionLabel =
-          regions.find((r) => r.value === values.region)?.label ||
-          values.region;
-
-        toast.success(`L’agent ${agentName} a été affecté à la région ${regionLabel}`);
-
-        // ✅ reset du formulaire
-        form.reset();
-      } else {
-        toast.info("Réponse inattendue du serveur.");
+  // Gestion de la soumission du formulaire
+  const onSubmit = (values: z.infer<typeof affectationSchemaMassDeleguer>) => {
+    startTransition(async () => {
+      const apiUrl = `http://192.168.100.4:8080/Vox_Backend//api.php?method=Affectation`;
+      const playload = {
+        ...values,
+        campagne: "Mass delegue"
       }
-    } catch (error) {
-      console.error("❌ Erreur API:", error);
-      toast.error("Erreur lors de l’enregistrement de l’affectation");
-    } finally {
-      setLoading(false); // désactiver le loading
+      try {
+        // Envoi de la requête POST avec les données du formulaire
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(playload),
+        });
+
+        // Vérification de la requête
+        if (!response.ok) {
+          setErrorMessage("Erreur lors de l'exécution de la requête.");
+          return; // Arrêter l'exécution si la requête a échoué
+        }
+
+        const responseData = await response.json();
+
+        if (responseData.error) {
+          setErrorMessage(responseData.error);
+        } else if (responseData.success) {
+          setSuccessMessage(responseData.success);
+
+          // Mettre à jour la liste des contacts pour ne plus afficher ceux qui ont été affectés
+          setContacts((prevContacts) => prevContacts.filter(
+            (contact) => !values.ContactIds.includes(String(contact.id))
+          ));
+
+          // Réinitialiser les contacts sélectionnés
+          setSelectedContacts([]);
+        }
+
+      } catch (error) {
+        console.error("Erreur :", error);
+        setErrorMessage("Une erreur est survenue lors de la soumission.");
+      }
+    });
+  };
+
+
+
+  // Gestion des contacts sélectionnés
+  const handleContactSelection = (contactId: string, checked: boolean) => {
+    if (checked) {
+      setSelectedContacts((prev) => [...prev, contactId]); // Ajouter le contact s'il est coché
+    } else {
+      setSelectedContacts((prev) => prev.filter((id) => id !== contactId)); // Retirer s'il est décoché
     }
   };
 
+  // Mettre à jour le champ ContactIds lorsque les contacts changent
+  useEffect(() => {
+    form.setValue("ContactIds", selectedContacts);
+  }, [selectedContacts, form]);
+
   return (
-    <Card className="w-[1000px] mx-auto mt-10 shadow-lg rounded-2xl">
-      <CardHeader>
-        <CardTitle>Affectation d’un agent à une région</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ToastContainer position="top-center" />
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Sélection région */}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="h-max p-4 text-blue">
+          <div className="bg-blanc w-full h-max rounded-lg shadow-blue p-2 flex gap-4">
+            {/* Sélection de la campagne */}
             <FormField
               control={form.control}
               name="region"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Région</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="👉 Choisir une région" />
-                      </SelectTrigger>
-                    </FormControl>
+                <FormItem className="w-full">
+                  <Select onValueChange={(value) => {
+                    field.onChange(value);  // Mettre à jour la valeur du formulaire
+                    fetchContacts(value);    // Effectuer des actions supplémentaires
+                  }} value={field.value}>
+                    <SelectTrigger className="relative outline-none border border-blue rounded-lg px-4 flex flex-1 py-1 cursor-pointer">
+                      <SelectValue placeholder="Sélectionnez une regions" />
+                    </SelectTrigger>
                     <SelectContent>
-                      {regions.map((r) => (
-                        <SelectItem key={r.value} value={r.value}>
-                          {r.label}
-                        </SelectItem>
-                      ))}
+                      {
+                        REGIONS.map((items, index) => (
+                          <SelectItem value={items.name} key={index}>
+                            {items.name}
+                          </SelectItem>
+                        ))
+                      }
                     </SelectContent>
                   </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
+          </div>
+        </div>
 
-            {/* Sélection agent */}
-            <FormField
-              control={form.control}
-              name="agent"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Agent</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="👉 Choisir un agent" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {agents.map((a) => (
-                        <SelectItem key={a.value} value={a.value}>
-                          {a.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        {/* Liste des agents */}
+        <div className="h-max p-4 text-blue">
+          <div className="bg-blanc w-full h-max rounded-lg shadow-blue p-2 flex gap-8 flex-col">
+            <div className="flex gap-20 w-full">
+              <div className="px-2 w-1/2">
+                <h1 className="text-blue font-semibold py-2">Liste des agents</h1>
+                <ScrollArea className="border border-blue rounded-lg w-full h-[200px]">
+                  <FormField
+                    control={form.control}
+                    name="AgentsId"
+                    render={({ field }) => (
+                      <RadioGroup value={field.value} onValueChange={field.onChange}>
+                        {agents.length > 0 ? (
+                          agents.map((agent) => (
+                            <FormItem key={String(agent.id)}>
+                              <div className="flex items-center space-x-2 p-2">
+                                <RadioGroupItem value={String(agent.id)} id={String(agent.id)} />
+                                <FormLabel htmlFor={String(agent.id)}>{agent.Nom}</FormLabel>
+                              </div>
+                            </FormItem>
+                          ))
+                        ) : (
+                          <div className="w-full text-blue">
+                            Il n'y a plus d'agents à affecter.
+                          </div>
+                        )}
+                      </RadioGroup>
+                    )}
+                  />
+                </ScrollArea>
+              </div>
 
-            {/* Bouton Affecter */}
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "⏳ Affectation en cours..." : "Affecter"}
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+              {/* Liste des contacts avec checkboxes */}
+              <div className="px-2 w-1/2">
+                <h1 className="text-blue font-semibold py-2">Liste des contacts</h1>
+                <ScrollArea className="border border-blue rounded-lg w-full h-[200px]">
+                  <FormField
+                    control={form.control}
+                    name="ContactIds"
+                    render={({ field }) => (
+                      <>
+                        {contacts.length > 0 ? (
+                          contacts.map((contact) => (
+                            <FormItem key={String(contact.id)}>
+                              <div className="w-full px-4 py-2 flex items-center gap-1">
+                                <FormControl>
+                                  <Checkbox
+                                    id={String(contact.id)}
+                                    checked={selectedContacts.includes(String(contact.id))}
+                                    onCheckedChange={(checked) => {
+                                      handleContactSelection(String(contact.id), checked);
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormLabel htmlFor={String(contact.id)}>{contact.Nom}</FormLabel>
+                              </div>
+                            </FormItem>
+                          ))
+                        ) : (
+                          <div className="w-full text-blue">
+                            Il n'y a plus de contacts à affecter aujourd'hui.
+                          </div>
+                        )}
+                      </>
+                    )}
+                  />
+                </ScrollArea>
+              </div>
+            </div>
+
+            <FormError message={errorMessage} />
+            <FormSucces message={successMessage} />
+
+            {/* Bouton de soumission */}
+            <div className="w-full flex justify-end">
+              <button
+                type="submit"
+                className="w-max h-max p-2 rounded-lg bg-blue text-blanc hover:bg-blue/90 duration-500"
+              >
+                Affecter
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </Form>
   );
-};
-
-export default Affectation_Mass_deleguer;
+}

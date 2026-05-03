@@ -45,6 +45,8 @@ export type TousLescontact = {
     Email: string;
     Telephone: number;
     Adresse: string;
+    region: string;
+    localite: string;
     Status: string;
     Commentaire: string;
     commande: string;
@@ -105,6 +107,14 @@ export const TousLescontactColumns: ColumnDef<TousLescontact>[] = [
     {
         accessorKey: "commande",
         header: "Numero de commande",
+    },
+    {
+        accessorKey: "region",
+        header: "Region",
+    },
+    {
+        accessorKey: "localite",
+        header: "Localite",
     },
     {
         accessorKey: "Adresse",

@@ -46,6 +46,13 @@ export const affectationSchema = z.object({
     AgentsId: z.string().min(1, "Veuillez sélectionner un agent."),
     ContactIds: z.array(z.string()).min(1, "Veuillez sélectionner au moins un contact."),
 });
+// Schéma Zod pour la validation
+export const affectationSchemaMassDeleguer = z.object({
+    region: z.string().min(1, "Veuillez sélectionner une campagne."),
+    localiter: z.string().optional(),
+    AgentsId: z.string().min(1, "Veuillez sélectionner un agent."),
+    ContactIds: z.array(z.string()).min(1, "Veuillez sélectionner au moins un contact."),
+});
 
 
 // Define Zod schema for form validation
@@ -97,18 +104,18 @@ export const FormSchema = z.object({
 
 
 export const FormQuickPost = z.object({
-    Nom: z.string().min(1,"Le nom  est obligatoire"),
-    Telephone:  z.string().min(1,"Le Telephone  est obligatoire"),
-    Arecuperation: z.string().min(1,"Adresse de recuperation  est obligatoire"),
-    Adresse_livraison:  z.string().min(1,"Description du Contenu de Livraison est obligatoire"),
-    Description_du_Contenu :  z.string().min(1,"Adresse de Livraison est obligatoire"),
-    Nombre_de_Voyages  :  z.string().min(1,"Nombre de Voyages  de Livraison est obligatoire"),
-    Date_livraison: z.string().min(1,"La date  est obligatoire"),
+    Nom: z.string().min(1, "Le nom  est obligatoire"),
+    Telephone: z.string().min(1, "Le Telephone  est obligatoire"),
+    Arecuperation: z.string().min(1, "Adresse de recuperation  est obligatoire"),
+    Adresse_livraison: z.string().min(1, "Description du Contenu de Livraison est obligatoire"),
+    Description_du_Contenu: z.string().min(1, "Adresse de Livraison est obligatoire"),
+    Nombre_de_Voyages: z.string().min(1, "Nombre de Voyages  de Livraison est obligatoire"),
+    Date_livraison: z.string().min(1, "La date  est obligatoire"),
 })
 
 
 // ✅ Schéma Zod avec 19 réponses obligatoires
-export  const schema = z.object({
+export const schema = z.object({
     question1: z.string().min(1, "Réponse obligatoire"),
     question2: z.string().min(1, "Réponse obligatoire"),
     question3: z.string().min(1, "Réponse obligatoire"),

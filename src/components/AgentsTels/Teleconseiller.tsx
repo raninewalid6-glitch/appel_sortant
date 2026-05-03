@@ -12,7 +12,7 @@ const Menu = [
     { title: "Petite paquet", icon: <Box />, link: "/Teleconseiller/Petite_paquet" },
     { title: "Cartin", icon: <PackageCheck />, link: "/Teleconseiller/Cartin" },
     { title: "Mass enqueter", icon: <Handshake />, link: "/Teleconseiller/Mass" },
-    { title: "Mass delegue ", icon: <Handshake />, link: "/Teleconseiller/Mass_delegue" },
+    { title: "Mass delegue", icon: <Handshake />, link: "/Teleconseiller/Mass_delegue" },
     { title: "E-suuq Prospection", icon: <HousePlug />, link: "/Teleconseiller/E-suuq_Prospection"},
     { title: "Maison citoyens", icon: <HousePlug />, link: "/Teleconseiller/Maison_Du_citoyens"},
     {
