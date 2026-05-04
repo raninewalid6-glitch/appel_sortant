@@ -247,21 +247,21 @@ export function DataTableReaffect<TData, TValue>({
 
     return (
         <>
-            <div className="flex items-center gap-8 bg-blanc w-full h-max rounded-lg shadow-blue p-2">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 sm:gap-4 bg-blanc w-full h-max rounded-lg shadow-blue p-2">
                 <Input
                     placeholder="Filter name..."
                     value={(table.getColumn(typeName)?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn(typeName)?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm focus:ring-2 focus:ring-blue text-blue"
+                    className="w-full sm:w-auto sm:max-w-sm focus:ring-2 focus:ring-blue text-blue"
                 />
                 <Form {...selcte}>
                     <FormField
                         control={selcte.control}
                         name="Compagne"
                         render={({ field }) => (
-                            <FormItem className="w-full">
+                            <FormItem className="w-full sm:w-auto">
                                 <FormControl>
                                     <Select
                                         {...field}
@@ -300,7 +300,7 @@ export function DataTableReaffect<TData, TValue>({
                             onChange={(event) =>
                                 table.getColumn("Date_appel")?.setFilterValue(event.target.value)
                             }
-                            className="max-w-sm focus:ring-2 focus:ring-blue text-blue"
+                            className="w-full sm:w-auto sm:max-w-sm focus:ring-2 focus:ring-blue text-blue"
                         />
                         {/* <button
                             className="text-white bg-blue hover:bg-blue/90 duration-300 p-2 w-max flex justify-center items-center space-x-2 rounded-lg"
@@ -310,7 +310,7 @@ export function DataTableReaffect<TData, TValue>({
                             <span>Exportation</span>
                         </button> */}
                         <button
-                            className="text-white bg-blue hover:bg-blue/90 duration-300 p-2 w-max flex justify-center items-center space-x-2 rounded-lg"
+                            className="text-white bg-blue hover:bg-blue/90 duration-300 p-2 w-full sm:w-auto flex justify-center items-center space-x-2 rounded-lg"
                             onClick={() => setIsDialogOpen(true)}
                         >
                             <span>Réaffecter</span>
@@ -320,7 +320,7 @@ export function DataTableReaffect<TData, TValue>({
 
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button className="ml-auto bg-blue text-blanc hover:bg-blue/90">Colonnes</Button>
+                        <Button className="w-full sm:w-auto sm:ml-auto bg-blue text-blanc hover:bg-blue/90">Colonnes</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                         {table.getAllColumns().map((column) => (
@@ -335,7 +335,7 @@ export function DataTableReaffect<TData, TValue>({
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <div className="rounded-md bg-blanc w-full h-max shadow-blue mt-3">
+            <div className="rounded-md bg-blanc w-full h-max shadow-blue mt-3 overflow-x-auto">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (

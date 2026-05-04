@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { MassData, MassSupColumns } from "./Culumns/CulumnsMass";
 import { DataTable } from "../DataTable";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { ScrollArea } from "../ui/scroll-area";
 
 const Mass = () => {
     const [data, setData] = useState<MassData[]>([]);
@@ -40,14 +40,15 @@ const Mass = () => {
     }, []);
 
     return (
-        <ScrollArea className="w-[1500px] rounded-md bg-white whitespace-nowrap p-4">
-            {loading ? (
-                <p className="text-center">⏳ Chargement...</p>
-            ) : (
-                <DataTable data={data} columns={MassSupColumns} typeName="Nom" />
-            )}
-            <ScrollBar orientation="horizontal" />
-        </ScrollArea>
+        <div className="w-full rounded-md bg-white p-4">
+            <ScrollArea className="w-full">
+                {loading ? (
+                    <p className="text-center">⏳ Chargement...</p>
+                ) : (
+                    <DataTable data={data} columns={MassSupColumns} typeName="Nom" />
+                )}
+            </ScrollArea>
+        </div>
     );
 };
 
