@@ -44,7 +44,7 @@ import { FormError } from "../FormError"
 
 interface Agent {
     id: string;
-    name: string;
+    Nom: string;
 }
 
 interface DataTableProps<TData, TValue> {
@@ -166,9 +166,11 @@ export function DataTableReaffect<TData, TValue>({
 
     // Fonction pour récupérer l'ID des lignes sélectionnées
     const getSelectedRowIds = (): number[] => {
-        return table.getRowModel().rows
-            .filter((row, index) => rowSelection[index as keyof typeof rowSelection]) // Vérifier la sélection avec l'indice
-            .map((row) => (row.original as RowData).id); // Caster l'original en RowData
+        return table
+            .getSelectedRowModel()
+            .rows
+            .map((row) => Number((row.original as RowData).id))
+            .filter((id) => Number.isFinite(id));
     };
 
 
@@ -176,6 +178,31 @@ export function DataTableReaffect<TData, TValue>({
     const handleReassign = async () => {
         const selectedRowIds = getSelectedRowIds();
         const apiUrl = `http://192.168.100.4:8080/Vox_Backend/api.php?method=Reaffectation`;
+        console.debug("[Reaffectation] handleReassign:start", {
+            selectedRowIds,
+            selectedAgent,
+            selectedCompagne,
+            rowSelection,
+            selectedRowsCount: table.getSelectedRowModel().rows.length,
+        });
+
+        if (!selectedCompagne) {
+            setErrorMessage("Veuillez sélectionner une campagne avant la réaffectation.");
+            console.debug("[Reaffectation] blocked:missing-campagne");
+            return;
+        }
+
+        if (!selectedAgent) {
+            setErrorMessage("Veuillez sélectionner un agent avant la réaffectation.");
+            console.debug("[Reaffectation] blocked:missing-agent");
+            return;
+        }
+
+        if (selectedRowIds.length === 0) {
+            setErrorMessage("Veuillez sélectionner au moins un contact à réaffecter.");
+            console.debug("[Reaffectation] blocked:missing-rows");
+            return;
+        }
 
         try {
             const payload = {
@@ -183,6 +210,7 @@ export function DataTableReaffect<TData, TValue>({
                 AgentsId: selectedAgent,
                 ContactIds: selectedRowIds,
             };
+            console.debug("[Reaffectation] request:payload", payload);
 
             // Envoi de la requête POST avec les données du formulaire
             const response = await fetch(apiUrl, {
@@ -196,10 +224,12 @@ export function DataTableReaffect<TData, TValue>({
             // Vérification de la requête
             if (!response.ok) {
                 console.error("Erreur lors de l'exécution de la requête.");
+                setErrorMessage("La requête de réaffectation a échoué.");
                 return; // Arrêter l'exécution si la requête a échoué
             }
 
             const responseData = await response.json();
+            console.debug("[Reaffectation] response", responseData);
 
             if (responseData.error) {
                 setErrorMessage(responseData.error);
@@ -210,9 +240,15 @@ export function DataTableReaffect<TData, TValue>({
                 SetData((prevData) =>
                     prevData.filter((row) => !selectedRowIds.includes(row.id))
                 );
+                setRowSelection({});
+                console.debug("[Reaffectation] local-data-updated", {
+                    removedIds: selectedRowIds,
+                });
             }
         } catch (error) {
             console.error("Erreur :", error);
+            setErrorMessage("Une erreur inattendue est survenue pendant la réaffectation.");
+            console.debug("[Reaffectation] catch", error);
         }
     };
 
@@ -222,6 +258,14 @@ export function DataTableReaffect<TData, TValue>({
         fetchCompagner()
         fetchAgents()
     }, [])
+
+    useEffect(() => {
+        const selected = table.getSelectedRowModel().rows.map((row) => (row.original as RowData).id);
+        console.debug("[Reaffectation] selection:changed", {
+            rowSelection,
+            selected,
+        });
+    }, [rowSelection, table]);
 
     return (
         <>
