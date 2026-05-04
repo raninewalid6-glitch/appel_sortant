@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar";
 import { Database, LayoutDashboard ,  Truck,  Users , } from 'lucide-react';
 import Maincontent from "../Maincontent";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import ContentCommerce from "./ContentCommerce";
 
 const Menu = [
@@ -16,10 +17,11 @@ const Menu = [
 
 export default function ACommerce() {
     const path = usePathname();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     return (
-        <div className="flex">
-            <Sidebar menu={Menu} titre="Commercial" />
-            <Maincontent>
+        <div className="flex min-h-screen">
+            <Sidebar menu={Menu} titre="Commercial" isOpen={isSidebarOpen} />
+            <Maincontent onMenuClick={() => setIsSidebarOpen((prev) => !prev)}>
                 <h1 className="text-xl font-medium py-4 text-blue">{path.replace(/^\/+/, '')}</h1>
                 {Menu.map((item) => (
                     path === item.link && <ContentCommerce key={item.link} />

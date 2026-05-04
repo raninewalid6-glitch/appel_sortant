@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar";
 import { ArrowRight, Building2, ClipboardPen, Database, FileChartColumnIncreasing, FileX2, Handshake, LayoutDashboard, LayoutList, Megaphone, RefreshCcw, Users, } from 'lucide-react';
 import Maincontent from "../Maincontent";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import SupContent from "./SupContent";
 
 const Menu = [
@@ -23,10 +24,11 @@ const Menu = [
 
 export default function Superviseur() {
     const path = usePathname();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     return (
-        <div className="flex">
-            <Sidebar menu={Menu} titre="Superviseur" />
-            <Maincontent>
+        <div className="flex min-h-screen">
+            <Sidebar menu={Menu} titre="Superviseur" isOpen={isSidebarOpen} />
+            <Maincontent onMenuClick={() => setIsSidebarOpen((prev) => !prev)}>
                 <h1 className="text-xl font-medium py-4 text-blue">{path.replace(/^\/+/, '')}</h1>
                 <SupContent />
             </Maincontent>
