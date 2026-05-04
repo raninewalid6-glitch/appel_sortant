@@ -30,13 +30,13 @@ export default function Sidebar({ menu, titre, isOpen, onLinkClick }: SideBarPro
           <Image src="/logo.png" alt="logo" width={30} height={30} />
           {isOpen && <span>{titre}</span>}
         </h1>
-        <ul className="p-4">
+        <ul className="p-3 sm:p-4">
           {menu.map((item, index) => (
             <li key={index} className="mt-2">
               {item.Submenu ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <div className={`flex items-center gap-x-2 cursor-pointer p-2 rounded-md w-full transition-colors duration-300 ${(open === item.title || isSubMenuActive(item.Submenu)) ? "bg-white text-blue" : "text-white"} group hover:bg-white`} onClick={() => toggleSubMenu(item.title)}>
+                    <div className={`flex items-center gap-x-2 cursor-pointer p-2.5 rounded-md w-full transition-colors duration-300 ${(open === item.title || isSubMenuActive(item.Submenu)) ? "bg-white text-blue" : "text-white"} group hover:bg-white`} onClick={() => toggleSubMenu(item.title)}>
                       <span className={`mr-2 duration-500 group-hover:text-blue ${isSubMenuActive(item.Submenu) ? "text-blue" : "text-white"}`}>{item.icon}</span>
                       {isOpen && <span className="text-sm group-hover:text-blue">{item.title}</span>}
                     </div>
@@ -45,16 +45,16 @@ export default function Sidebar({ menu, titre, isOpen, onLinkClick }: SideBarPro
                     <DropdownMenuContent className="w-full">
                       {item.Submenu.map((subItem, subIndex) => (
                         <DropdownMenuItem asChild key={subIndex}>
-                          <Link onClick={onLinkClick} href={subItem.link} className={`text-sm block w-full cursor-pointer p-2 transition-colors duration-300 ${pathname === subItem.link ? "text-blue" : "text-gray-800"} hover:text-blue`}>{subItem.title}</Link>
+                          <Link onClick={onLinkClick} href={subItem.link} className={`text-sm block w-full cursor-pointer p-2.5 transition-colors duration-300 break-words ${pathname === subItem.link ? "text-blue" : "text-gray-800"} hover:text-blue`}>{subItem.title}</Link>
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuContent>
                   )}
                 </DropdownMenu>
               ) : item.link && (
-                <Link onClick={onLinkClick} href={item.link} className={`flex items-center gap-x-2 cursor-pointer p-2 rounded-md w-full transition-colors duration-300 ${pathname === item.link ? "bg-white text-blue" : "text-white"} group hover:bg-white`}>
+                <Link onClick={onLinkClick} href={item.link} className={`flex items-center gap-x-2 cursor-pointer p-2.5 rounded-md w-full transition-colors duration-300 ${pathname === item.link ? "bg-white text-blue" : "text-white"} group hover:bg-white`}>
                   <span className={`mr-2 duration-500 ${pathname === item.link ? "text-blue" : "text-white"} group-hover:text-blue`}>{item.icon}</span>
-                  {isOpen && <span className="text-sm group-hover:text-blue">{item.title}</span>}
+                  {isOpen && <span className="text-sm group-hover:text-blue break-words">{item.title}</span>}
                 </Link>
               )}
             </li>

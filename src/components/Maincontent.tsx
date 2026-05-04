@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "./Navbar";
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface ChildProps {
     children: React.ReactNode,
@@ -9,11 +8,11 @@ interface ChildProps {
 
 export default function Maincontent({ children, onMenuClick }: ChildProps) {
     return (
-        <div className="w-full h-screen">
+        <div className="w-full min-h-screen md:min-h-0 md:h-screen flex flex-col">
             <Navbar onMenuClick={onMenuClick} />
-            <ScrollArea className="w-full bg-gris h-[calc(100vh-72px)] p-4">
+            <main className="w-full bg-gris flex-1 overflow-y-auto p-3 sm:p-4 min-w-0">
                 {children}
-            </ScrollArea>
+            </main>
         </div>
     )
 }
