@@ -14,9 +14,10 @@ interface SideBarProps {
   menu: MenuItem[];
   titre: string;
   isOpen: boolean;
+  onLinkClick?: () => void;
 }
 
-export default function Sidebar({ menu, titre, isOpen }: SideBarProps) {
+export default function Sidebar({ menu, titre, isOpen, onLinkClick }: SideBarProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState<string | null>(null);
   const toggleSubMenu = (title: string) => setOpen(open === title ? null : title);
@@ -44,14 +45,14 @@ export default function Sidebar({ menu, titre, isOpen }: SideBarProps) {
                     <DropdownMenuContent className="w-full">
                       {item.Submenu.map((subItem, subIndex) => (
                         <DropdownMenuItem asChild key={subIndex}>
-                          <Link href={subItem.link} className={`text-sm block w-full cursor-pointer p-2 transition-colors duration-300 ${pathname === subItem.link ? "text-blue" : "text-gray-800"} hover:text-blue`}>{subItem.title}</Link>
+                          <Link onClick={onLinkClick} href={subItem.link} className={`text-sm block w-full cursor-pointer p-2 transition-colors duration-300 ${pathname === subItem.link ? "text-blue" : "text-gray-800"} hover:text-blue`}>{subItem.title}</Link>
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuContent>
                   )}
                 </DropdownMenu>
               ) : item.link && (
-                <Link href={item.link} className={`flex items-center gap-x-2 cursor-pointer p-2 rounded-md w-full transition-colors duration-300 ${pathname === item.link ? "bg-white text-blue" : "text-white"} group hover:bg-white`}>
+                <Link onClick={onLinkClick} href={item.link} className={`flex items-center gap-x-2 cursor-pointer p-2 rounded-md w-full transition-colors duration-300 ${pathname === item.link ? "bg-white text-blue" : "text-white"} group hover:bg-white`}>
                   <span className={`mr-2 duration-500 ${pathname === item.link ? "text-blue" : "text-white"} group-hover:text-blue`}>{item.icon}</span>
                   {isOpen && <span className="text-sm group-hover:text-blue">{item.title}</span>}
                 </Link>

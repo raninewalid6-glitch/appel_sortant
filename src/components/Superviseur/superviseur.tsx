@@ -3,7 +3,7 @@ import Sidebar from "../Sidebar";
 import { ArrowRight, Building2, ClipboardPen, Database, FileChartColumnIncreasing, FileX2, Handshake, LayoutDashboard, LayoutList, Megaphone, RefreshCcw, Users, } from 'lucide-react';
 import Maincontent from "../Maincontent";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SupContent from "./SupContent";
 
 const Menu = [
@@ -25,9 +25,29 @@ const Menu = [
 export default function Superviseur() {
     const path = usePathname();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const mobile = window.innerWidth < 768;
+            setIsMobile(mobile);
+            setIsSidebarOpen(mobile ? false : true);
+        };
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     return (
         <div className="flex min-h-screen">
-            <Sidebar menu={Menu} titre="Superviseur" isOpen={isSidebarOpen} />
+            {isMobile && isSidebarOpen && (
+                <button
+                    className="fixed inset-0 bg-black/50 z-30"
+                    aria-label="Fermer le menu"
+                    onClick={() => setIsSidebarOpen(false)}
+                />
+            )}
+            <Sidebar menu={Menu} titre="Superviseur" isOpen={isSidebarOpen} onLinkClick={() => isMobile && setIsSidebarOpen(false)} />
             <Maincontent onMenuClick={() => setIsSidebarOpen((prev) => !prev)}>
                 <h1 className="text-xl font-medium py-4 text-blue">{path.replace(/^\/+/, '')}</h1>
                 <SupContent />
