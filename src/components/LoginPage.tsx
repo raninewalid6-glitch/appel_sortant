@@ -42,9 +42,9 @@ export default function LoginPage() {
         })
     }
     return (
-        <div className="h-screen w-screen flex justify-center items-center bg-blue">
-            <div className="rounded-lg flex w-[60%] h-max max-w-4xl bg-white shadow-lg overflow-hidden">
-                <div className="w-1/2 relative">
+        <div className="min-h-screen w-screen flex justify-center items-center bg-blue p-4">
+            <div className="rounded-lg flex flex-col md:flex-row w-full max-w-4xl h-max bg-white shadow-lg overflow-hidden">
+                <div className="hidden md:block md:w-1/2 relative min-h-[520px]">
                     <Image
                         src="/image4.jpg"
                         alt="photo lateral"
@@ -53,7 +53,7 @@ export default function LoginPage() {
                         className="object-cover rounded-tl-lg rounded-bl-lg"
                     />
                 </div>
-                <div className="w-1/2 p-8 flex flex-col items-center mx-auto">
+                <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col items-center mx-auto">
                     <h2 className="flex items-center pb-4 capitalize w-full text-center text-blue font-semibold text-2xl">
                         <Headset className="mx-2" />
                         call centre

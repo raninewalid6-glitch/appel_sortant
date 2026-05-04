@@ -223,9 +223,9 @@ export default function Affectation_Mass_deleguer() {
 
         {/* Liste des agents */}
         <div className="h-max p-4 text-blue">
-          <div className="bg-blanc w-full h-max rounded-lg shadow-blue p-2 flex gap-8 flex-col">
-            <div className="flex gap-20 w-full">
-              <div className="px-2 w-1/2">
+          <div className="bg-blanc w-full h-max rounded-lg shadow-blue p-2 flex gap-4 md:gap-8 lg:gap-12 flex-col">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-8 lg:gap-12 w-full">
+              <div className="px-2 w-full md:w-1/2">
                 <h1 className="text-blue font-semibold py-2">Liste des agents</h1>
                 <ScrollArea className="border border-blue rounded-lg w-full h-[200px]">
                   <FormField
@@ -254,7 +254,7 @@ export default function Affectation_Mass_deleguer() {
               </div>
 
               {/* Liste des contacts avec checkboxes */}
-              <div className="px-2 w-1/2">
+              <div className="px-2 w-full md:w-1/2">
                 <h1 className="text-blue font-semibold py-2">Liste des contacts</h1>
                 <ScrollArea className="border border-blue rounded-lg w-full h-[200px]">
                   <FormField
