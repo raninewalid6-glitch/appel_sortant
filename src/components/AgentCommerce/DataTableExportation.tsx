@@ -194,9 +194,9 @@ export function DataTableExportattion<TData, TValue>({
                     </TableBody>
                 </Table>
                 {/* paginations */}
-                <div className="flex items-center justify-end space-x-2 py-4 px-2">
+                <div className="flex flex-wrap items-center gap-3 py-4 px-2">
                     {/* rows per page selector */}
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center gap-2">
                         <label htmlFor="rows-per-page" className="text-sm">
                             Rows per page:
                         </label>
@@ -204,7 +204,7 @@ export function DataTableExportattion<TData, TValue>({
                             id="rows-per-page"
                             value={pageSize}
                             onChange={(e) => setPageSize(Number(e.target.value))}
-                            className="border rounded-md p-1"
+                            className="border rounded-md px-2 py-1.5 min-h-9"
                         >
                             {[10, 20, 30, 40, 50].map((size) => (
                                 <option key={size} value={size}>
@@ -214,13 +214,13 @@ export function DataTableExportattion<TData, TValue>({
                         </select>
                     </div>
                     {/* show selected row  */}
-                    <div className="flex-1 text-sm text-muted-foreground">
+                    <div className="w-full sm:flex-1 text-sm text-muted-foreground order-3 sm:order-none">
                         {table.getFilteredSelectedRowModel().rows.length} of{" "}
                         {table.getFilteredRowModel().rows.length} row(s) selected.
                     </div>
                     <Button
                         variant="outline"
-                        size="sm"
+                        size="default"
                         onClick={() => table.previousPage()}
                         disabled={!table.getCanPreviousPage()}
                     >
@@ -228,7 +228,7 @@ export function DataTableExportattion<TData, TValue>({
                     </Button>
                     <Button
                         variant="outline"
-                        size="sm"
+                        size="default"
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                     >

@@ -224,7 +224,7 @@ export function DataTableRepartition<TData, TValue>({
                             table.getRowModel().rows.map((row) => (
                                 <TableRow key={row.id} className="border-b">
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
+                                        <TableCell key={cell.id} className="break-words">
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
@@ -241,26 +241,26 @@ export function DataTableRepartition<TData, TValue>({
                 </Table>
 
                 {/* Pagination and selected rows */}
-                <div className="flex items-center justify-end space-x-2 py-4 px-2">
-                    <div className="flex items-center space-x-2">
+                <div className="flex flex-wrap items-center gap-3 py-4 px-2">
+                    <div className="flex items-center gap-2">
                         <label htmlFor="rows-per-page" className="text-sm">Rows per page:</label>
                         <select
                             id="rows-per-page"
                             value={pageSize}
                             onChange={(e) => setPageSize(Number(e.target.value))}
-                            className="border rounded-md p-1"
+                            className="border rounded-md px-2 py-1.5 min-h-9"
                         >
                             {[10, 20, 30, 40, 50, 100].map((size) => (
                                 <option key={size} value={size}>{size}</option>
                             ))}
                         </select>
                     </div>
-                    <div className="flex-1 text-sm">
+                    <div className="w-full sm:flex-1 text-sm order-3 sm:order-none">
                         {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
                     </div>
                     <Button
                         variant="outline"
-                        size="sm"
+                        size="default"
                         onClick={() => {
                             setPageIndex((prev) => Math.max(prev - 1, 0));
                             table.previousPage();
@@ -271,7 +271,7 @@ export function DataTableRepartition<TData, TValue>({
                     </Button>
                     <Button
                         variant="outline"
-                        size="sm"
+                        size="default"
                         onClick={() => {
                             setPageIndex((prev) => prev + 1);
                             table.nextPage();
