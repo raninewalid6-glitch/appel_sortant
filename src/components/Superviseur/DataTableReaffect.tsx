@@ -32,19 +32,18 @@ import { useState, useEffect } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useForm } from "react-hook-form"
 import { SelectionCompagne } from "@/Schemas"
-import { number, z } from "zod"
+import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { FileUp } from "lucide-react"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { usePathname } from "next/navigation"
 import * as XLSX from "xlsx"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { FormSucces } from "../FormSucces"
 import { FormError } from "../FormError"
 
 interface Agent {
     id: string;
-    name: string;
+    Nom: string;
 }
 
 interface DataTableProps<TData, TValue> {
@@ -52,7 +51,6 @@ interface DataTableProps<TData, TValue> {
     data: TData[];
     typeName: string;
     FetchData: (value: z.infer<typeof SelectionCompagne>) => void;
-    SetData: Dispatch<SetStateAction<TData[]>>;
 }
 
 export function DataTableReaffect<TData, TValue>({
@@ -60,7 +58,6 @@ export function DataTableReaffect<TData, TValue>({
     data,
     typeName,
     FetchData,
-    SetData,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -75,6 +72,7 @@ export function DataTableReaffect<TData, TValue>({
     const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined);
     const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
     const [pageIndex, setPageIndex] = useState(0); // Ajout de pageIndex dans l'état
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const table = useReactTable({
         data,
@@ -159,16 +157,17 @@ export function DataTableReaffect<TData, TValue>({
 
     // Fonction pour récupérer l'ID des lignes sélectionnées
     // Exemple de type pour les données de la ligne
-    interface RowData {
-        id: number;
-        // autres propriétés ici si nécessaire
-    }
+    interface RowData { id: number | string; }
 
     // Fonction pour récupérer l'ID des lignes sélectionnées
     const getSelectedRowIds = (): number[] => {
-        return table.getRowModel().rows
-            .filter((row, index) => rowSelection[index as keyof typeof rowSelection]) // Vérifier la sélection avec l'indice
-            .map((row) => (row.original as RowData).id); // Caster l'original en RowData
+        const ids = table
+            .getSelectedRowModel()
+            .rows
+            .map((row) => Number((row.original as RowData).id))
+            .filter((id) => Number.isInteger(id) && id > 0);
+
+        return Array.from(new Set(ids));
     };
 
 
@@ -176,7 +175,25 @@ export function DataTableReaffect<TData, TValue>({
     const handleReassign = async () => {
         const selectedRowIds = getSelectedRowIds();
         const apiUrl = `http://192.168.100.4:8080/Vox_Backend/api.php?method=Reaffectation`;
+        setSuccessMessage(undefined);
+        setErrorMessage(undefined);
 
+        if (!selectedCompagne) {
+            setErrorMessage("Veuillez sélectionner une campagne avant la réaffectation.");
+            return;
+        }
+
+        if (!selectedAgent) {
+            setErrorMessage("Veuillez sélectionner un agent avant la réaffectation.");
+            return;
+        }
+
+        if (selectedRowIds.length === 0) {
+            setErrorMessage("Veuillez sélectionner au moins un contact à réaffecter.");
+            return;
+        }
+
+        setIsSubmitting(true);
         try {
             const payload = {
                 campagne: selectedCompagne,
@@ -196,6 +213,7 @@ export function DataTableReaffect<TData, TValue>({
             // Vérification de la requête
             if (!response.ok) {
                 console.error("Erreur lors de l'exécution de la requête.");
+                setErrorMessage("La requête de réaffectation a échoué.");
                 return; // Arrêter l'exécution si la requête a échoué
             }
 
@@ -205,14 +223,14 @@ export function DataTableReaffect<TData, TValue>({
                 setErrorMessage(responseData.error);
             } else if (responseData.success) {
                 setSuccessMessage(responseData.success);
-
-                // Supprimez les lignes sélectionnées après succès
-                SetData((prevData) =>
-                    prevData.filter((row) => !selectedRowIds.includes(row.id))
-                );
+                await FetchData(selectedCompagne);
+                setRowSelection({});
             }
         } catch (error) {
             console.error("Erreur :", error);
+            setErrorMessage("Une erreur inattendue est survenue pendant la réaffectation.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -222,6 +240,8 @@ export function DataTableReaffect<TData, TValue>({
         fetchCompagner()
         fetchAgents()
     }, [])
+
+    const isReassignDisabled = !selectedCompagne || !selectedAgent || getSelectedRowIds().length === 0 || isSubmitting;
 
     return (
         <>
@@ -422,7 +442,7 @@ export function DataTableReaffect<TData, TValue>({
                         <FormError message={errorMessage} />
                     </Select>
                     <DialogFooter>
-                        <Button type="button" onClick={handleReassign} className="text-white bg-blue">Réaffecter</Button>
+                        <Button type="button" onClick={handleReassign} disabled={isReassignDisabled} className="text-white bg-blue disabled:opacity-60">{isSubmitting ? "Réaffectation..." : "Réaffecter"}</Button>
                         <Button type="button" onClick={() => setIsDialogOpen(false)} className="text-white bg-blue">Annuler</Button>
                     </DialogFooter>
                 </DialogContent>
