@@ -152,14 +152,14 @@ export function DataTableRepartition<TData, TValue>({
 
     return (
         <>
-            <div className="flex items-center gap-8 bg-white w-full h-max rounded-lg shadow p-2">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 sm:gap-4 bg-white w-full h-max rounded-lg shadow p-2">
                 <Input
                     placeholder="Filter By name contact..."
                     value={(table.getColumn(typeName)?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn(typeName)?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm focus:ring-2 focus:ring-blue text-blue"
+                    className="w-full sm:w-auto sm:max-w-sm focus:ring-2 focus:ring-blue text-blue"
                 />
                 <Input
                     placeholder="Filter By Date affectation..."
@@ -167,7 +167,7 @@ export function DataTableRepartition<TData, TValue>({
                     onChange={(event) =>
                         table.getColumn("Date_affectation")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm focus:ring-2 focus:ring-blue text-blue"
+                    className="w-full sm:w-auto sm:max-w-sm focus:ring-2 focus:ring-blue text-blue"
                 />
                 <Input
                     placeholder="Filter By Compagne..."
@@ -175,7 +175,7 @@ export function DataTableRepartition<TData, TValue>({
                     onChange={(event) =>
                         table.getColumn("Compagne")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm focus:ring-2 focus:ring-blue text-blue"
+                    className="w-full sm:w-auto sm:max-w-sm focus:ring-2 focus:ring-blue text-blue"
                 />
                 <Input
                     placeholder="Filter By Status..."
@@ -183,14 +183,14 @@ export function DataTableRepartition<TData, TValue>({
                     onChange={(event) =>
                         table.getColumn("qualification")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm focus:ring-2 focus:ring-blue text-blue"
+                    className="w-full sm:w-auto sm:max-w-sm focus:ring-2 focus:ring-blue text-blue"
                 />
-                <Button className="ml-auto bg-blue text-white" onClick={() => setIsDialogOpen(true)}>
+                <Button className="w-full sm:w-auto sm:ml-auto bg-blue text-white" onClick={() => setIsDialogOpen(true)}>
                     Desaffectation
                 </Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button className="ml-auto bg-blue text-white">Colonnes</Button>
+                        <Button className="w-full sm:w-auto sm:ml-auto bg-blue text-white">Colonnes</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                         {table.getAllColumns().map((column) => (
@@ -206,7 +206,7 @@ export function DataTableRepartition<TData, TValue>({
                 </DropdownMenu>
             </div>
 
-            <div className="rounded-md bg-white w-full h-max shadow mt-3">
+            <div className="rounded-md bg-white w-full h-max shadow mt-3 overflow-x-auto">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (

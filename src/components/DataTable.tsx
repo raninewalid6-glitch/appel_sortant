@@ -80,14 +80,14 @@ export function DataTable<TData, TValue>({
     return (
         <>
             {/* column filter */}
-            <div className="flex items-center py-4 gap-1">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center py-4 gap-2">
                 <Input
                     placeholder="Filter name..."
                     value={(table.getColumn(typeName)?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn(typeName)?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm focus:ring-2 focus:ring-blue text-blue"
+                    className="w-full sm:w-auto sm:max-w-sm focus:ring-2 focus:ring-blue text-blue"
                 />
                 <Input
                     placeholder="Filter by date..."
@@ -95,11 +95,11 @@ export function DataTable<TData, TValue>({
                     onChange={(event) =>
                         table.getColumn("Date_Enregistrement")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm focus:ring-2 focus:ring-blue text-blue"
+                    className="w-full sm:w-auto sm:max-w-sm focus:ring-2 focus:ring-blue text-blue"
                 />
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button className="ml-auto bg-blue text-blanc hover:bg-blue/90 hover:text-blanc duration-500">
+                        <Button className="w-full sm:w-auto sm:ml-auto bg-blue text-blanc hover:bg-blue/90 hover:text-blanc duration-500">
                             Columns
                         </Button>
                     </DropdownMenuTrigger>
@@ -125,7 +125,7 @@ export function DataTable<TData, TValue>({
                 </DropdownMenu>
             </div>
             {/* data table */}
-            <div className="rounded-md border border-blue">
+            <div className="rounded-md border border-blue overflow-x-auto">
                 <Table>
                     <TableHeader className="border border-blue">
                         {table.getHeaderGroups().map((headerGroup) => (
