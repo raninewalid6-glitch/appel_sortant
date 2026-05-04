@@ -181,7 +181,7 @@ const QuickActionsCell = ({ row }: QuickActionsCellProps) => {
                                         {successMessage && <FormSucces message={successMessage} />}
                                         {errorMessage && <FormError message={errorMessage} />}
                                     </div>
-                                    <Button type="submit" className="w-full bg-blue" disabled={isPending}>
+                                    <Button type="submit" className="w-full bg-blue sm:w-auto" disabled={isPending}>
                                         Modifier
                                     </Button>
                                 </form>
@@ -200,7 +200,7 @@ const QuickActionsCell = ({ row }: QuickActionsCellProps) => {
                                 <FormError message={errorMessage} />
                                 <FormSucces message={successMessage} />
                                 <h1>Voulez-vous vraiment supprimer ?</h1>
-                                <div className="flex items-center">
+                                <div className="flex items-center w-full">
                                     <button className="bg-red-500 hover:bg-red-500/80 text-white font-bold py-2 px-4 rounded-[10px] w-full focus:outline-none focus:shadow-outline mt-4" type="submit">
                                         Supprimer
                                     </button>

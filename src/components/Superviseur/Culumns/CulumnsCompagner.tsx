@@ -129,7 +129,7 @@ function CompagneActionsCell({ row }: CompagneActionsCellProps) {
                                             control={form.control}
                                             name="Nom"
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel className="text-blue">Nom</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} placeholder="example:fatouma" type="text" disabled={isPending} />
@@ -142,7 +142,7 @@ function CompagneActionsCell({ row }: CompagneActionsCellProps) {
                                             control={form.control}
                                             name="Societe"
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel className="text-blue">Societe</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} placeholder="fatouma@example.com" type="text" disabled={isPending} />
@@ -155,7 +155,7 @@ function CompagneActionsCell({ row }: CompagneActionsCellProps) {
                                             control={form.control}
                                             name="Script"
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel className="text-blue">Script</FormLabel>
                                                     <FormControl>
                                                         <Textarea {...field} placeholder="Entre le script ici" disabled={isPending} className="text-blue border-blue" />
@@ -167,7 +167,7 @@ function CompagneActionsCell({ row }: CompagneActionsCellProps) {
                                     </div>
                                     <FormError message={errorMessage} />
                                     <FormSucces message={successMessage} />
-                                    <Button type="submit" className="w-full mt-2 bg-blue" disabled={isPending}>Enregistrer</Button>
+                                    <Button type="submit" className="mt-2 w-full bg-blue sm:w-auto" disabled={isPending}>Enregistrer</Button>
                                 </form>
                             </Form>
                         </DialogDescription>
@@ -184,7 +184,7 @@ function CompagneActionsCell({ row }: CompagneActionsCellProps) {
                                 <FormError message={errorMessage} />
                                 <FormSucces message={successMessage} />
                                 <h1>Voulez-vous vraiment supprimer ?</h1>
-                                <div className="flex items-center">
+                                <div className="flex items-center w-full">
                                     <button
                                         className="bg-red-500 hover:bg-red-500/80 text-white font-bold py-2 px-4 rounded-[10px] w-full focus:outline-none focus:shadow-outline mt-4"
                                         type="submit"
