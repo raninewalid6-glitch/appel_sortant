@@ -51,17 +51,18 @@ export function PieChartDonutWithText({QuickTotalData,LivTotalData}:MychartPropo
     }, [QuickTotalData,LivTotalData])
 
     return (
-        <Card className="flex flex-col">
+        <Card className="flex h-full w-full max-w-full flex-col overflow-hidden">
             <CardHeader className="items-center pb-0">
-                <CardTitle className="text-blue">Evolution des livraisons</CardTitle>
-                <CardDescription ><span className="text-orange-600">Quick poste</span> - <span className="text-lime-500">Livraison normale</span></CardDescription>
+                <CardTitle className="text-center text-blue text-base sm:text-lg">Evolution des livraisons</CardTitle>
+                <CardDescription className="text-center break-words"><span className="text-orange-600">Quick poste</span> - <span className="text-lime-500">Livraison normale</span></CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-0">
+                <div className="h-[260px] w-full overflow-hidden md:h-[320px]">
                 <ChartContainer
                     config={chartConfig}
-                    className="mx-auto aspect-square max-h-[250px]"
+                    className="mx-auto h-full w-full max-w-full"
                 >
-                    <PieChart>
+                    <PieChart width={320} height={260}>
                         <ChartTooltip
                             cursor={false}
                             content={<ChartTooltipContent hideLabel />}
@@ -105,6 +106,7 @@ export function PieChartDonutWithText({QuickTotalData,LivTotalData}:MychartPropo
                         </Pie>
                     </PieChart>
                 </ChartContainer>
+                </div>
             </CardContent>
             <CardFooter className="flex-col gap-2 text-sm">
                 <div className="leading-none text-muted-foreground flex gap-2 text-orange-700">
