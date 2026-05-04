@@ -101,8 +101,8 @@ export default function QuickPostes() {
     // Render
     return (
         <div className="flex flex-col gap-8">
-            <div className="flex gap-4">
-                <div className="bg-white w-[50%] h-max rounded p-4 shadow-blue ">
+            <div className="flex flex-col md:flex-row gap-4">
+                <div className="bg-white w-full md:w-1/2 h-max rounded p-4 shadow-blue ">
                     <h1 className="text-blue text-xl font-semibold p-4 text-center ">Livraison</h1>
                     <Form {...FormPoste}>
                         <form onSubmit={FormPoste.handleSubmit(onSubmitsQuick)} className="flex gap-4 flex-col">
@@ -247,12 +247,13 @@ export default function QuickPostes() {
                         </form>
                     </Form>
                 </div>
-                <div className="bg-white w-[50%] h-[600px] overflow-hidden rounded shadow-blue">
+                <div className="bg-white w-full md:w-1/2 h-[600px] overflow-hidden rounded shadow-blue">
                     <h1 className="text-center capitalize p-4 text-blue font-semibold">Script</h1>
                     <ScrollArea className="w-full h-full text-blue p-4">
                         <h4 className="font-bold mt-2">TARIFICATION DE QUICK POST PENDANT LES JOURS OUVRABLES</h4>
 
-                        <table className="table-auto w-full mt-4 mb-4">
+                        <div className="overflow-x-auto">
+                        <table className="table-auto w-full mt-4 mb-4 min-w-[520px]">
                             <thead>
                                 <tr>
                                     <th className="px-4 py-2">Zone</th>
@@ -293,6 +294,7 @@ export default function QuickPostes() {
                                 </tr>
                             </tbody>
                         </table>
+                        </div>
 
                         <h4 className="font-bold mt-4">Frais de Livraison de 17h00 à 21h00 pour les jours ouvrables :</h4>
                         <ul className="list-disc list-inside mt-2">
