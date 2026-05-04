@@ -200,6 +200,7 @@ export function DataTableReaffect<TData, TValue>({
                 AgentsId: selectedAgent,
                 ContactIds: selectedRowIds,
             };
+            console.debug("[Reaffectation] request:payload", payload);
 
             // Envoi de la requête POST avec les données du formulaire
             const response = await fetch(apiUrl, {
@@ -218,6 +219,7 @@ export function DataTableReaffect<TData, TValue>({
             }
 
             const responseData = await response.json();
+            console.debug("[Reaffectation] response", responseData);
 
             if (responseData.error) {
                 setErrorMessage(responseData.error);
