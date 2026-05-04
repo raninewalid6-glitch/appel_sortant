@@ -51,8 +51,8 @@ export function MyBetterChart({CallTotalData,PositiveCallTotalData,NegativeCallT
   return (
     <Card className="w-full bg-blanc shadow-blue">
       <CardHeader>
-        <CardTitle className="text-blue">Vue d'ensemble</CardTitle>
-        <CardDescription className="text-blue">visualisation de l'evolution des appelles</CardDescription>
+        <CardTitle className="text-blue">Vue d&apos;ensemble</CardTitle>
+        <CardDescription className="text-blue">visualisation de l&apos;evolution des appelles</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
