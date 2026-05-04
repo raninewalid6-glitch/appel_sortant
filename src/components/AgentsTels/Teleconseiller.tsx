@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar";
 import { ShoppingBag, Box, DollarSign, Truck, BellPlus, PackageCheck, Mails, ClipboardPen, HousePlug, ConciergeBell, Handshake } from 'lucide-react';
 import Maincontent from "../Maincontent";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import Content from "./Content";
 
 // Menu items, including icons and submenus
@@ -40,14 +41,12 @@ const Menu = [
 
 export default function Teleconseiller() {
     const path = usePathname();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
     return (
-        <div className="flex">
-            {/* Sidebar component with the menu */}
-            <Sidebar menu={Menu} titre="Teleconseiller" />
-
-            {/* Main content section */}
-            <Maincontent>
+        <div className="flex min-h-screen">
+            <Sidebar menu={Menu} titre="Teleconseiller" isOpen={isSidebarOpen} />
+            <Maincontent onMenuClick={() => setIsSidebarOpen((prev) => !prev)}>
                 <h1 className="text-xl font-medium py-4 text-blue capitalize">
                     {path.replace(/^\/+/, '').replace(/_/g, ' ')}
                 </h1>
