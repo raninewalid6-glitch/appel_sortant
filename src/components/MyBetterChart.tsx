@@ -49,14 +49,15 @@ export function MyBetterChart({CallTotalData,PositiveCallTotalData,NegativeCallT
     }
   } satisfies ChartConfig
   return (
-    <Card className="w-full bg-blanc shadow-blue">
+    <Card className="w-full max-w-full overflow-hidden bg-blanc shadow-blue">
       <CardHeader>
         <CardTitle className="text-blue">Vue d&apos;ensemble</CardTitle>
         <CardDescription className="text-blue">visualisation de l&apos;evolution des appelles</CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
+      <CardContent className="overflow-x-auto">
+        <div className="h-[260px] min-w-[320px] w-full md:h-[320px]">
+        <ChartContainer config={chartConfig} className="h-full w-full">
+          <BarChart accessibilityLayer data={chartData} width={640} height={300}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="browser"
@@ -90,6 +91,7 @@ export function MyBetterChart({CallTotalData,PositiveCallTotalData,NegativeCallT
             />
           </BarChart>
         </ChartContainer>
+        </div>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         {/* <div className="flex gap-2 font-medium leading-none">

@@ -70,8 +70,8 @@ export default function Content({ title }: TitleProps) {
                     )}
                 </div>
             ) : (
-                <div className="flex flex-col md:flex-row gap-4">
-                    <div className="bg-white w-full md:w-1/2 h-max rounded p-4 shadow-blue">
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div className="bg-white w-full h-max rounded p-4 shadow-blue max-w-full overflow-hidden">
                         <h1 className="text-center capitalize p-4 text-blue font-semibold">
                             Liste de contacts
                         </h1>
@@ -86,13 +86,13 @@ export default function Content({ title }: TitleProps) {
                         )}
                     </div>
 
-                    <ScrollArea className="bg-white w-full md:w-1/2 h-[446px] rounded shadow-blue overflow-hidden">
+                    <ScrollArea className="bg-white w-full h-[360px] md:h-[446px] rounded shadow-blue overflow-hidden max-w-full">
                         <h1 className="text-center capitalize p-4 text-blue font-semibold">
                             Script
                         </h1>
                         <div className="w-full h-full text-blue p-4">
                             {Data && Data.length > 0 ? (
-                                <div>{Data[0].Script}</div>
+                                <div className="break-words">{Data[0].Script}</div>
                             ) : (
                                 <div>Il n&apos;y a aucun contact pour le moment.</div>
                             )}

@@ -103,9 +103,9 @@ export default function BoxInfoDetails({ title, total, color, SetCallData, type 
 
         //render
         return (
-            <div className="h-[100px] w-[300px] bg-blanc flex flex-col items-center shadow-blue">
-                <div className="p-2 flex justify-between gap-4">
-                    <h1 className="text-blue text-md font-semibold">{title}</h1>
+            <div className="min-h-[110px] w-full max-w-full bg-blanc flex flex-col items-center shadow-blue rounded-lg overflow-hidden">
+                <div className="w-full p-2 md:p-3 flex justify-between gap-2 md:gap-4 items-start">
+                    <h1 className="text-blue text-sm md:text-md font-semibold break-words">{title}</h1>
                     <DropdownMenu>
                         <DropdownMenuTrigger><EllipsisVertical className="text-blue h-[16px]" /></DropdownMenuTrigger>
                         <DropdownMenuContent className="text-blue">
@@ -119,8 +119,8 @@ export default function BoxInfoDetails({ title, total, color, SetCallData, type 
                     </DropdownMenu>
 
                 </div>
-                <div className="flex justify-center items-center p-2">
-                    <span className={`text-4xl text-${color}`}>{total}</span>
+                <div className="flex justify-center items-center p-2 w-full">
+                    <span className={`text-2xl sm:text-3xl md:text-4xl text-${color} break-words text-center`}>{total}</span>
                 </div>
             </div>
         )
@@ -208,9 +208,9 @@ export default function BoxInfoDetails({ title, total, color, SetCallData, type 
 
         //render
         return (
-            <div className="h-[100px] w-[300px] bg-blanc flex flex-col items-center shadow-blue">
-                <div className="p-2 flex justify-between gap-4">
-                    <h1 className="text-blue text-md font-semibold">{title}</h1>
+            <div className="min-h-[110px] w-full max-w-full bg-blanc flex flex-col items-center shadow-blue rounded-lg overflow-hidden">
+                <div className="w-full p-2 md:p-3 flex justify-between gap-2 md:gap-4 items-start">
+                    <h1 className="text-blue text-sm md:text-md font-semibold break-words">{title}</h1>
                     <DropdownMenu>
                         <DropdownMenuTrigger><EllipsisVertical className="text-blue h-[16px]" /></DropdownMenuTrigger>
                         <DropdownMenuContent className="text-blue">
@@ -224,8 +224,8 @@ export default function BoxInfoDetails({ title, total, color, SetCallData, type 
                     </DropdownMenu>
 
                 </div>
-                <div className="flex justify-center items-center p-2">
-                    <span className={`text-4xl text-${color}`}>{total}</span>
+                <div className="flex justify-center items-center p-2 w-full">
+                    <span className={`text-2xl sm:text-3xl md:text-4xl text-${color} break-words text-center`}>{total}</span>
                 </div>
             </div>
         )
@@ -313,9 +313,9 @@ export default function BoxInfoDetails({ title, total, color, SetCallData, type 
 
         //render
         return (
-            <div className="h-[100px] w-[300px] bg-blanc flex flex-col items-center shadow-blue">
-                <div className="p-2 flex justify-between gap-4">
-                    <h1 className="text-blue text-md font-semibold">{title}</h1>
+            <div className="min-h-[110px] w-full max-w-full bg-blanc flex flex-col items-center shadow-blue rounded-lg overflow-hidden">
+                <div className="w-full p-2 md:p-3 flex justify-between gap-2 md:gap-4 items-start">
+                    <h1 className="text-blue text-sm md:text-md font-semibold break-words">{title}</h1>
                     <DropdownMenu>
                         <DropdownMenuTrigger><EllipsisVertical className="text-blue h-[16px]" /></DropdownMenuTrigger>
                         <DropdownMenuContent className="text-blue">
@@ -329,8 +329,8 @@ export default function BoxInfoDetails({ title, total, color, SetCallData, type 
                     </DropdownMenu>
 
                 </div>
-                <div className="flex justify-center items-center p-2">
-                    <span className={`text-4xl text-${color}`}>{total}</span>
+                <div className="flex justify-center items-center p-2 w-full">
+                    <span className={`text-2xl sm:text-3xl md:text-4xl text-${color} break-words text-center`}>{total}</span>
                 </div>
             </div>
         )
@@ -418,9 +418,9 @@ export default function BoxInfoDetails({ title, total, color, SetCallData, type 
 
         //render
         return (
-            <div className="h-[100px] w-[300px] bg-blanc flex flex-col items-center shadow-blue">
-                <div className="p-2 flex justify-between gap-4">
-                    <h1 className="text-blue text-md font-semibold">{title}</h1>
+            <div className="min-h-[110px] w-full max-w-full bg-blanc flex flex-col items-center shadow-blue rounded-lg overflow-hidden">
+                <div className="w-full p-2 md:p-3 flex justify-between gap-2 md:gap-4 items-start">
+                    <h1 className="text-blue text-sm md:text-md font-semibold break-words">{title}</h1>
                     <DropdownMenu>
                         <DropdownMenuTrigger><EllipsisVertical className="text-blue h-[16px]" /></DropdownMenuTrigger>
                         <DropdownMenuContent className="text-blue">
@@ -434,8 +434,8 @@ export default function BoxInfoDetails({ title, total, color, SetCallData, type 
                     </DropdownMenu>
 
                 </div>
-                <div className="flex justify-center items-center p-2">
-                    <span className={`text-4xl text-${color}`}>{total}</span>
+                <div className="flex justify-center items-center p-2 w-full">
+                    <span className={`text-2xl sm:text-3xl md:text-4xl text-${color} break-words text-center`}>{total}</span>
                 </div>
             </div>
         )
@@ -523,9 +523,9 @@ export default function BoxInfoDetails({ title, total, color, SetCallData, type 
 
         //render
         return (
-            <div className="h-[100px] w-[300px] bg-blanc flex flex-col items-center shadow-blue">
-                <div className="p-2 flex justify-between gap-4">
-                    <h1 className="text-blue text-md font-semibold">{title}</h1>
+            <div className="min-h-[110px] w-full max-w-full bg-blanc flex flex-col items-center shadow-blue rounded-lg overflow-hidden">
+                <div className="w-full p-2 md:p-3 flex justify-between gap-2 md:gap-4 items-start">
+                    <h1 className="text-blue text-sm md:text-md font-semibold break-words">{title}</h1>
                     <DropdownMenu>
                         <DropdownMenuTrigger><EllipsisVertical className="text-blue h-[16px]" /></DropdownMenuTrigger>
                         <DropdownMenuContent className="text-blue">
@@ -539,8 +539,8 @@ export default function BoxInfoDetails({ title, total, color, SetCallData, type 
                     </DropdownMenu>
 
                 </div>
-                <div className="flex justify-center items-center p-2">
-                    <span className={`text-4xl text-${color}`}>{total}</span>
+                <div className="flex justify-center items-center p-2 w-full">
+                    <span className={`text-2xl sm:text-3xl md:text-4xl text-${color} break-words text-center`}>{total}</span>
                 </div>
             </div>
         )

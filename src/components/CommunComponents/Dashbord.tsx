@@ -178,7 +178,7 @@ export default function Dashbord() {
     return (
         <main className="w-full">
             {/* the box information */}
-            <div className="flex w-full flex-wrap gap-20">
+            <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:grid-cols-4 lg:gap-8">
                 <BoxInfoDetails title="Nombres des appelles totals" total={CallTotalData} color="blue" SetCallData={SetCallTotalData} type="Total" key={1} />
                 <BoxInfoDetails title="Nombres des appelles positive" total={PositiveCallTotalData} SetCallData={SetPositiveCallTotalData} type="Positive" color="green-500" key={2} />
                 <BoxInfoDetails title="Nombres des appelles negative" total={NegativeCallTotalData} SetCallData={SetNegativeCallTotalData} type="Negative" color="red-500" key={3} />
@@ -186,11 +186,11 @@ export default function Dashbord() {
                 <BoxInfoDetails title="Nombre total de Livraison" total={LivTotalData} SetCallData={SetLivTotalData} type="Livraison" color="lime-500" key={4} />
             </div>
             {/* charte and table of compagne */}
-            <div className="flex gap-4">
-                <div className="w-2/3 py-4">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                <div className="w-full py-2 md:py-4">
                     <MyBetterChart CallTotalData={CallTotalData} PositiveCallTotalData={PositiveCallTotalData} NegativeCallTotalData={NegativeCallTotalData} />
                 </div>
-                <div className="w-2/3 py-4">
+                <div className="w-full py-2 md:py-4">
                     <PieChartDonutWithText QuickTotalData={QuickTotalData} LivTotalData={LivTotalData} />
                 </div>
             </div>
