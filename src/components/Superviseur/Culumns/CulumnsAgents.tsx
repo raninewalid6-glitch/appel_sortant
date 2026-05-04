@@ -135,7 +135,7 @@ const AgentsActionsCell = ({ row }: AgentsActionsCellProps) => {
                                             control={form.control}
                                             name="Nom"
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel className="text-blue">Nom</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} placeholder="example:fatouma" type="text" disabled={isPending} className="text-blue font-bold" />
@@ -148,7 +148,7 @@ const AgentsActionsCell = ({ row }: AgentsActionsCellProps) => {
                                             control={form.control}
                                             name="Email"
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel className="text-blue">Email</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} placeholder="fatouma@example.com" type="email" disabled={isPending} className="text-blue font-bold" />
@@ -161,7 +161,7 @@ const AgentsActionsCell = ({ row }: AgentsActionsCellProps) => {
                                             control={form.control}
                                             name="Password"
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel className="text-blue">Password</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} placeholder="***********" type="password" disabled={isPending} className="text-blue font-bold" />
@@ -174,7 +174,7 @@ const AgentsActionsCell = ({ row }: AgentsActionsCellProps) => {
                                             control={form.control}
                                             name="Telephone"
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel className="text-blue">Telephone</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} placeholder="example:77101010" type="text" disabled={isPending} className="text-blue font-bold" />
@@ -187,7 +187,7 @@ const AgentsActionsCell = ({ row }: AgentsActionsCellProps) => {
                                             control={form.control}
                                             name="Adresse"
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel className="text-blue">Adresse</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} placeholder="example:quartier 1" type="text" disabled={isPending} className="text-blue font-bold" />
@@ -200,7 +200,7 @@ const AgentsActionsCell = ({ row }: AgentsActionsCellProps) => {
                                             control={form.control}
                                             name="Role"
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel className="text-blue">Adresse</FormLabel>
                                                     <FormControl>
                                                         <Select
@@ -225,7 +225,7 @@ const AgentsActionsCell = ({ row }: AgentsActionsCellProps) => {
                                     </div>
                                     <FormError message={errorMessage} />
                                     <FormSucces message={successMessage} />
-                                    <Button type="submit" className="w-full mt-2 bg-blue" disabled={isPending}>Enregistrer</Button>
+                                    <Button type="submit" className="mt-2 w-full bg-blue sm:w-auto" disabled={isPending}>Enregistrer</Button>
                                 </form>
                             </Form>
                         </DialogDescription>
@@ -245,7 +245,7 @@ const AgentsActionsCell = ({ row }: AgentsActionsCellProps) => {
                                 <FormError message={errorMessage} />
                                 <FormSucces message={successMessage} />
                                 <h1>Voulez-vous vraiment supprimer ?</h1>
-                                <div className="flex items-center">
+                                <div className="flex items-center w-full">
                                     <button
                                         className="bg-red-500 hover:bg-red-500/80 text-white font-bold py-2 px-4 rounded-[10px] w-full focus:outline-none focus:shadow-outline mt-4"
                                         type="submit"

@@ -146,9 +146,9 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                             <Form {...form}>
                                 <form onSubmit={form.handleSubmit((values) => onEditSubmit(values))} className="w-full max-w-xl mx-auto">
                                     <div className="space-y-2 w-full">
-                                        <div className="flex gap-4 w-full">
+                                        <div className="flex flex-col gap-4 w-full sm:flex-row">
                                             <FormField control={form.control} name="Nom" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Nom</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} className="text-blue font-bold" placeholder="example:fatouma" type="text" disabled={isPending} />
@@ -158,7 +158,7 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                             )}
                                             />
                                             <FormField control={form.control} name="Email" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Email</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} className="text-blue  font-bold" placeholder="fatouma@example.com" type="email" disabled={isPending} />
@@ -168,9 +168,9 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                             )}
                                             />
                                         </div>
-                                        <div className="flex gap-4 w-full">
+                                        <div className="flex flex-col gap-4 w-full sm:flex-row">
                                             <FormField control={form.control} name="Telephone" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Telephone</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} className="text-blue font-bold" placeholder="telephone" type="text" disabled={isPending} />
@@ -180,7 +180,7 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                             )}
                                             />
                                             <FormField control={form.control} name="Adresse" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Adresse</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} className="text-blue font-bold" placeholder="adresse" type="text" disabled={isPending} />
@@ -190,9 +190,9 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                             )}
                                             />
                                         </div>
-                                        <div className="flex gap-4 w-full">
+                                        <div className="flex flex-col gap-4 w-full sm:flex-row">
                                             <FormField control={form.control} name="Provenance" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Provenance</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} className="text-blue font-bold" placeholder="Provenance" type="text" disabled={isPending} />
@@ -202,7 +202,7 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                             )}
                                             />
                                             <FormField control={form.control} name="Date_Enregistrement" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Date Enregistrement</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} className="text-blue font-bold" placeholder="Date_Enregistrement" type="text" disabled={isPending} />
@@ -212,9 +212,9 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                             )}
                                             />
                                         </div>
-                                        <div className="flex gap-4 w-full">
+                                        <div className="flex flex-col gap-4 w-full sm:flex-row">
                                             <FormField control={form.control} name="Nombre_colis" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Nombre colis</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} className="text-blue font-bold" placeholder="Nombre_colis" type="number" disabled={isPending} />
@@ -224,7 +224,7 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                             )}
                                             />
                                             <FormField control={form.control} name="Poids" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Poids</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} className="text-blue font-bold" placeholder="Poids" type="text" disabled={isPending} />
@@ -234,9 +234,9 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                             )}
                                             />
                                         </div>
-                                        <div className="flex gap-4 w-full">
+                                        <div className="flex flex-col gap-4 w-full sm:flex-row">
                                             <FormField control={form.control} name="Frais_Postaux" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Frais Postaux</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} className="text-blue font-bold" placeholder="Frais_Postaux" type="text" disabled={isPending} />
@@ -246,7 +246,7 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                             )}
                                             />
                                             <FormField control={form.control} name="Reference" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Reference</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} className="text-blue font-bold" placeholder="Reference" type="text" disabled={isPending} />
@@ -256,9 +256,9 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                             )}
                                             />
                                         </div>
-                                        <div className="flex gap-4 w-full">
+                                        <div className="flex flex-col gap-4 w-full sm:flex-row">
                                             <FormField control={form.control} name="Date_Abonnement" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Date Abonnement</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} placeholder=">Date Abonnement" type="text" disabled={isPending} className="text-blue font-bold" />
@@ -268,7 +268,7 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                             )}
                                             />
                                             <FormField control={form.control} name="Nationalite" render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel>Nationalite</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} placeholder="Nationalite" type="text" disabled={isPending} className="text-blue font-bold" />
@@ -281,7 +281,7 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                     </div>
                                     <FormError message={errorMessage} />
                                     <FormSucces message={successMessage} />
-                                    <Button type="submit" className="w-full mt-2 bg-blue" disabled={isPending}>Enregistrer</Button>
+                                    <Button type="submit" className="mt-2 w-full bg-blue sm:w-auto" disabled={isPending}>Enregistrer</Button>
                                 </form>
                             </Form>
                         </DialogDescription>
@@ -298,7 +298,7 @@ function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
                                 <FormError message={errorMessage} />
                                 <FormSucces message={successMessage} />
                                 <h1>Voulez-vous vraiment supprimer ?</h1>
-                                <div className="flex items-center">
+                                <div className="flex items-center w-full">
                                     <button
                                         className="bg-red-500 hover:bg-red-500/80 text-white font-bold py-2 px-4 rounded-[10px] w-full focus:outline-none focus:shadow-outline mt-4"
                                         type="submit"
