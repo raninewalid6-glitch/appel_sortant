@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Ellipsis } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -39,6 +39,167 @@ export type CompagneData = {
     Societe: string;
     Script: string;
 };
+
+type CompagneActionsCellProps = {
+    row: { original: CompagneData };
+};
+
+function CompagneActionsCell({ row }: CompagneActionsCellProps) {
+    const compagne = row.original;
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const { handleDelete, successMessage, errorMessage, setErrorMessage, EditerCompagne, isPending } = useAppContext();
+    const form = useForm<z.infer<typeof CompagneSchema>>({
+        resolver: zodResolver(CompagneSchema),
+        defaultValues: {
+            Nom: "",
+            Societe: "",
+            Script: "",
+        },
+    });
+
+    const onEditSubmit = (values: z.infer<typeof CompagneSchema>) => {
+        EditerCompagne(values, compagne.id);
+    };
+
+    const fetchCompagne = useCallback(async (id: string) => {
+        const apiUrl = `http://192.168.100.4:8080/Vox_Backend//api.php?method=AfficherCompagneParId&id=${id}`;
+        try {
+            const response = await fetch(apiUrl, {
+                method: "GET",
+            });
+
+            const responseData = await response.json();
+
+            if (!response.ok || responseData.error) {
+                setErrorMessage(responseData.error || "Network error detected.");
+            } else {
+                form.setValue("Nom", responseData.Nom);
+                form.setValue("Societe", responseData.Societe);
+                form.setValue("Script", responseData.Script);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [form, setErrorMessage]);
+
+    useEffect(() => {
+        if (compagne.id) {
+            fetchCompagne(compagne.id);
+        }
+    }, [compagne.id, fetchCompagne]);
+
+    return (
+        <div>
+            <DropdownMenu>
+                <DropdownMenuTrigger>
+                    <Ellipsis className="" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                        <button
+                            className="w-full bg-blue text-blanc hover:bg-blue/90 hover:text-blanc duration-500 rounded-lg p-1"
+                            onClick={() => setIsEditDialogOpen(true)}
+                        >
+                            Editer
+                        </button>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <button
+                            className="w-full bg-red-500 text-blanc hover:bg-red-500/90 hover:text-blanc duration-500 rounded-lg p-1"
+                            onClick={() => setIsDeleteDialogOpen(true)}
+                        >
+                            Supprimer
+                        </button>
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+                <DialogContent className="bg-blanc">
+                    <DialogHeader>
+                        <DialogTitle className="text-blue text-2xl mb-1 ml-[15%]">Editer une compagne</DialogTitle>
+                        <DialogDescription>
+                            <Form {...form}>
+                                <form onSubmit={form.handleSubmit((values) => onEditSubmit(values))} className="w-full max-w-xs mx-auto">
+                                    <div className="space-y-2">
+                                        <FormField
+                                            control={form.control}
+                                            name="Nom"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-blue">Nom</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} placeholder="example:fatouma" type="text" disabled={isPending} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="Societe"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-blue">Societe</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} placeholder="fatouma@example.com" type="text" disabled={isPending} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="Script"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-blue">Script</FormLabel>
+                                                    <FormControl>
+                                                        <Textarea {...field} placeholder="Entre le script ici" disabled={isPending} className="text-blue border-blue" />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                    <FormError message={errorMessage} />
+                                    <FormSucces message={successMessage} />
+                                    <Button type="submit" className="w-full mt-2 bg-blue" disabled={isPending}>Enregistrer</Button>
+                                </form>
+                            </Form>
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+                <DialogContent className="bg-blanc">
+                    <DialogHeader>
+                        <DialogTitle className="text-blue text-2xl mb-1 ml-[15%]">Supprimer une compagne</DialogTitle>
+                        <DialogDescription>
+                            <form className="w-full max-w-xs mx-auto" onSubmit={(e) => handleDelete(e, compagne.id)}>
+                                <FormError message={errorMessage} />
+                                <FormSucces message={successMessage} />
+                                <h1>Voulez-vous vraiment supprimer ?</h1>
+                                <div className="flex items-center">
+                                    <button
+                                        className="bg-red-500 hover:bg-red-500/80 text-white font-bold py-2 px-4 rounded-[10px] w-full focus:outline-none focus:shadow-outline mt-4"
+                                        type="submit"
+                                    >
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </form>
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+        </div>
+    );
+}
 
 export const CompagneColumns: ColumnDef<CompagneData>[] = [
     {
@@ -86,170 +247,6 @@ export const CompagneColumns: ColumnDef<CompagneData>[] = [
     {
         id: "actions",
         header: "Actions",
-        cell: ({ row }) => {
-            const compagne = row.original;
-            const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-            const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-            const { handleDelete, successMessage, errorMessage, setSuccessMessage, setErrorMessage, EditerCompagne, isPending } = useAppContext();
-            const form = useForm<z.infer<typeof CompagneSchema>>({
-                resolver: zodResolver(CompagneSchema),
-                defaultValues: {
-                    Nom: '',
-                    Societe: '',
-                    Script: '',
-                }
-            });
-            //fonction pour editer les informations du compagne
-            const onEditSubmit = (values: z.infer<typeof CompagneSchema>) => {
-                EditerCompagne(values, compagne.id);
-                // setIsEditDialogOpen(false);
-            };
-
-            //fonction pour recupere les information d'un compagne par son id 
-            const fetchCompagne = async (id: string) => {
-                const apiUrl = `http://192.168.100.4:8080/Vox_Backend//api.php?method=AfficherCompagneParId&id=${id}`;
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: "GET",
-                    });
-
-                    const responseData = await response.json();
-
-                    if (!response.ok || responseData.error) {
-                        setErrorMessage(responseData.error || "Network error detected.");
-                    } else {
-                        // Set form default values with the fetched data
-                        form.setValue("Nom", responseData.Nom);
-                        form.setValue("Societe", responseData.Societe);
-                        form.setValue("Script", responseData.Script);
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            };
-            //appeller la fonction fetchCompagne ici
-            useEffect(() => {
-                if (compagne.id) {
-                    fetchCompagne(compagne.id);
-                }
-              }, [compagne.id]); // Fetch data when the dialog is opened
-
-            return (
-                <div>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger>
-                            <Ellipsis className="" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <button
-                                    className="w-full bg-blue text-blanc hover:bg-blue/90 hover:text-blanc duration-500 rounded-lg p-1"
-                                    onClick={() => setIsEditDialogOpen(true)}
-                                >
-                                    Editer
-                                </button>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <button
-                                    className="w-full bg-red-500 text-blanc hover:bg-red-500/90 hover:text-blanc duration-500 rounded-lg p-1"
-                                    onClick={() => setIsDeleteDialogOpen(true)}
-                                >
-                                    Supprimer
-                                </button>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-
-                    {/* Edit dialog */}
-                    <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-                        <DialogContent className="bg-blanc">
-                            <DialogHeader>
-                                <DialogTitle className="text-blue text-2xl mb-1 ml-[15%]">Editer une compagne</DialogTitle>
-                                <DialogDescription>
-                                    <Form {...form}>
-                                        <form onSubmit={form.handleSubmit((values) => onEditSubmit(values))} className="w-full max-w-xs mx-auto">
-                                            <div className="space-y-2">
-                                                <FormField
-                                                    control={form.control}
-                                                    name="Nom"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel className="text-blue">Nom</FormLabel>
-                                                            <FormControl>
-                                                                <Input {...field} placeholder="example:fatouma" type="text" disabled={isPending} />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                                <FormField
-                                                    control={form.control}
-                                                    name="Societe"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel className="text-blue">Societe</FormLabel>
-                                                            <FormControl>
-                                                                <Input {...field} placeholder="fatouma@example.com" type="text" disabled={isPending} />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                                <FormField
-                                                    control={form.control}
-                                                    name="Script"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel className="text-blue">Script</FormLabel>
-                                                            <FormControl>
-                                                                <Textarea {...field} placeholder="Entre le script ici" disabled={isPending} className="text-blue border-blue" />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                            </div>
-                                            <FormError message={errorMessage} />
-                                            <FormSucces message={successMessage} />
-                                            <Button type="submit" className="w-full mt-2 bg-blue" disabled={isPending}>Enregistrer</Button>
-                                        </form>
-
-                                    </Form>
-                                </DialogDescription>
-                            </DialogHeader>
-                        </DialogContent>
-                    </Dialog>
-
-                    {/* Delete dialog */}
-                    <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-                        <DialogContent className="bg-blanc">
-                            <DialogHeader>
-                                <DialogTitle className="text-blue text-2xl mb-1 ml-[15%]">Supprimer une compagne</DialogTitle>
-                                <DialogDescription>
-                                    <form
-                                        className="w-full max-w-xs mx-auto"
-                                        onSubmit={(e) => handleDelete(e, compagne.id)} // Appel de handleDelete avec id
-                                    >
-                                        <FormError message={errorMessage} />
-                                        <FormSucces message={successMessage} />
-                                        <h1>Voulez-vous vraiment supprimer ?</h1>
-                                        <div className="flex items-center">
-                                            <button
-                                                className="bg-red-500 hover:bg-red-500/80 text-white font-bold py-2 px-4 rounded-[10px] w-full focus:outline-none focus:shadow-outline mt-4"
-                                                type="submit"
-                                            >
-                                                Supprimer
-                                            </button>
-                                        </div>
-                                    </form>
-                                </DialogDescription>
-                            </DialogHeader>
-                        </DialogContent>
-                    </Dialog>
-                </div>
-            );
-        },
+        cell: ({ row }) => <CompagneActionsCell row={row} />,
     },
 ];
