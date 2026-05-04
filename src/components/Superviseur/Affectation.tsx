@@ -295,7 +295,7 @@ export default function Affectation() {
                                                     ))
                                                 ) : (
                                                     <div className="w-full text-blue">
-                                                        Il n'y a plus d'agents à affecter.
+                                                        Il n&apos;y a plus d&apos;agents à affecter.
                                                     </div>
                                                 )}
                                             </RadioGroup>
@@ -332,7 +332,7 @@ export default function Affectation() {
                                                     ))
                                                 ) : (
                                                     <div className="w-full text-blue">
-                                                        Il n'y a plus de contacts à affecter aujourd'hui.
+                                                        Il n&apos;y a plus de contacts à affecter aujourd&apos;hui.
                                                     </div>
                                                 )}
                                             </>

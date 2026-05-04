@@ -44,7 +44,7 @@ export default function Navbar() {
                         </div>
                     </TooltipTrigger>
                     <TooltipContent>
-                        <p>Le Nom de l'utilisateur</p>
+                        <p>Le Nom de l&apos;utilisateur</p>
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>

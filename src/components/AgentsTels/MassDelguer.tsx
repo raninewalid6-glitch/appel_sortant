@@ -55,7 +55,7 @@ const MassDelguer = ({ title }: TitleProps) => {
                         {Data && Data.length > 0 ? (
                             <div>{Data[0].Script}</div>
                         ) : (
-                            <div>Il n'y a aucun contact pour le moment.</div>
+                            <div>Il n&apos;y a aucun contact pour le moment.</div>
                         )}
                     </div>
 
