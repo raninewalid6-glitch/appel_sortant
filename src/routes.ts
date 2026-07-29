@@ -69,6 +69,7 @@ export const TeleconseilRoutes = [
     "/Teleconseiller/Colis-Ems",
     "/Teleconseiller/Petite_paquet",
     "/Teleconseiller/Demande_livraison",
+    "/Teleconseiller/Colis-Retour",
     "/Teleconseiller/Recouvrement/Retard_paiement",
     "/Teleconseiller/Recouvrement/Redevance_annee",
     "/Teleconseiller/Recouvrement/Nouveau_Abonne",

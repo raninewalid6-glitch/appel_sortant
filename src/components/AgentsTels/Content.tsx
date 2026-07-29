@@ -16,6 +16,7 @@ import QuickPostes from "./comonents/QuickPoste";
 import TousLesIndisponibles from "./comonents/TousLesInsponibles";
 import { Masscolumns } from "./MassCol";
 import MassDelguer from "./MassDelguer";
+import ColisRetour from "./comonents/ColisRetour";
 
 // Titre dynamique
 interface TitleProps {
@@ -42,6 +43,8 @@ export default function Content({ title }: TitleProps) {
                 <Rappeller />
             ) : path === "/Teleconseiller/Mass_delegue" ? (
                 <MassDelguer title="Mass delegue" />
+            ) : path === "/Teleconseiller/Colis-Retour" ? (
+                <ColisRetour />
             ) : path === "/Teleconseiller/Status_des_appels/Repondu" ? (
                 <ReponduState />
             ) : path === "/Teleconseiller/Status_des_appels/Indisponible" ? (
@@ -104,57 +107,57 @@ export default function Content({ title }: TitleProps) {
                                 </h4>
 
                                 <div className="overflow-x-auto">
-                                <table className="table-auto w-full mt-4 mb-4 min-w-[520px]">
-                                    <thead>
-                                        <tr>
-                                            <th className="px-4 py-2">Zone</th>
-                                            <th className="px-4 py-2">Localité</th>
-                                            <th className="px-4 py-2">Tarif</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td className="border px-4 py-2">1</td>
-                                            <td className="border px-4 py-2">Rasdika</td>
-                                            <td className="border px-4 py-2">250 DJF</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="border px-4 py-2">2</td>
-                                            <td className="border px-4 py-2">
-                                                Quartier 1,2,3,4,5,6 et 7
-                                            </td>
-                                            <td className="border px-4 py-2">350 DJF</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="border px-4 py-2">3</td>
-                                            <td className="border px-4 py-2">
-                                                Q7bis, Ambouli, Jabel, Haramous, Gabode
-                                            </td>
-                                            <td className="border px-4 py-2">500 DJF</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="border px-4 py-2">4</td>
-                                            <td className="border px-4 py-2">
-                                                Cheick Moussa / Place Holl-Holl
-                                            </td>
-                                            <td className="border px-4 py-2">700 DJF</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="border px-4 py-2">5</td>
-                                            <td className="border px-4 py-2">
-                                                4ème Arrondissement / Place Hayableh / Barwaqo 1
-                                            </td>
-                                            <td className="border px-4 py-2">700 DJF</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="border px-4 py-2">6</td>
-                                            <td className="border px-4 py-2">
-                                                Hodan / PK12 / PK 13 / Nassib / Barwaqo 2
-                                            </td>
-                                            <td className="border px-4 py-2">1250 DJF</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <table className="table-auto w-full mt-4 mb-4 min-w-[520px]">
+                                        <thead>
+                                            <tr>
+                                                <th className="px-4 py-2">Zone</th>
+                                                <th className="px-4 py-2">Localité</th>
+                                                <th className="px-4 py-2">Tarif</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td className="border px-4 py-2">1</td>
+                                                <td className="border px-4 py-2">Rasdika</td>
+                                                <td className="border px-4 py-2">250 DJF</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="border px-4 py-2">2</td>
+                                                <td className="border px-4 py-2">
+                                                    Quartier 1,2,3,4,5,6 et 7
+                                                </td>
+                                                <td className="border px-4 py-2">350 DJF</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="border px-4 py-2">3</td>
+                                                <td className="border px-4 py-2">
+                                                    Q7bis, Ambouli, Jabel, Haramous, Gabode
+                                                </td>
+                                                <td className="border px-4 py-2">500 DJF</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="border px-4 py-2">4</td>
+                                                <td className="border px-4 py-2">
+                                                    Cheick Moussa / Place Holl-Holl
+                                                </td>
+                                                <td className="border px-4 py-2">700 DJF</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="border px-4 py-2">5</td>
+                                                <td className="border px-4 py-2">
+                                                    4ème Arrondissement / Place Hayableh / Barwaqo 1
+                                                </td>
+                                                <td className="border px-4 py-2">700 DJF</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="border px-4 py-2">6</td>
+                                                <td className="border px-4 py-2">
+                                                    Hodan / PK12 / PK 13 / Nassib / Barwaqo 2
+                                                </td>
+                                                <td className="border px-4 py-2">1250 DJF</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
 
                                 <h4 className="font-bold mt-4">

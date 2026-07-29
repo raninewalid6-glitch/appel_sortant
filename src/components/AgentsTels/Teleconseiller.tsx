@@ -10,6 +10,7 @@ import Content from "./Content";
 const Menu = [
     { title: "E-suuq", icon: <ShoppingBag />, link: "/Teleconseiller/E-suuq" },
     { title: "Colis-Ems", icon: <Mails />, link: "/Teleconseiller/Colis-Ems" },
+    { title: "colis retour", icon: <Mails />, link: "/Teleconseiller/Colis-Retour" },
     { title: "Petite paquet", icon: <Box />, link: "/Teleconseiller/Petite_paquet" },
     { title: "Cartin", icon: <PackageCheck />, link: "/Teleconseiller/Cartin" },
     { title: "Mass enqueter", icon: <Handshake />, link: "/Teleconseiller/Mass" },
