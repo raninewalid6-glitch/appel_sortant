@@ -57,6 +57,7 @@ export const SuperviseurRoutes = [
     "/Superviseur/Repartition_des_Contacts",
     "/Superviseur/Historique",
     "/Superviseur/Affectation_Mass_deleguer",
+    // "/Superviseur/Test"
 ];
 
 /**

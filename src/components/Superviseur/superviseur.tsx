@@ -8,6 +8,7 @@ import SupContent from "./SupContent";
 
 const Menu = [
     { title: "Dashbord", icon: <LayoutDashboard />, link: "/Superviseur/Dashbord" },
+    // { title: "Test", icon: <LayoutDashboard />, link: "/Superviseur/Test" },
     { title: "Affectation", icon: <ArrowRight />, link: "/Superviseur/Affectation" },
     { title: "ReAffectation", icon: <RefreshCcw />, link: "/Superviseur/ReAffectation" },
     { title: "Répartition des Contacts", icon: <LayoutList />, link: "/Superviseur/Repartition_des_Contacts" },

@@ -21,6 +21,12 @@ export default function SupContent() {
             {path && path === "/Superviseur/Dashbord" && (
                 <Dashbord />
             )}
+            {/* // Test */}
+            {/* {path && path === "/Superviseur/Test" && (
+                <div>
+                    hello c'est le composant test .
+                </div>
+            )} */}
 
             {/* // le affectation */}
             {path && path === "/Superviseur/Affectation" && (
