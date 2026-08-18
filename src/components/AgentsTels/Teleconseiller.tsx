@@ -1,6 +1,6 @@
 "use client";
 import Sidebar from "../Sidebar";
-import { ShoppingBag, Box, DollarSign, Truck, BellPlus, PackageCheck, Mails, ClipboardPen, HousePlug, ConciergeBell, Handshake } from 'lucide-react';
+import { ShoppingBag, Box, DollarSign, Truck, BellPlus, PackageCheck, Mails, ClipboardPen, HousePlug, ConciergeBell, Handshake, Clock } from 'lucide-react';
 import Maincontent from "../Maincontent";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import Content from "./Content";
 // Menu items, including icons and submenus
 const Menu = [
     { title: "E-suuq", icon: <ShoppingBag />, link: "/Teleconseiller/E-suuq" },
+    { title: "E-suuq retard", icon: <Clock />, link: "/Teleconseiller/E-suuq_retard" },
     { title: "Colis-Ems", icon: <Mails />, link: "/Teleconseiller/Colis-Ems" },
     { title: "colis retour", icon: <Mails />, link: "/Teleconseiller/Colis-Retour" },
     { title: "Petite paquet", icon: <Box />, link: "/Teleconseiller/Petite_paquet" },

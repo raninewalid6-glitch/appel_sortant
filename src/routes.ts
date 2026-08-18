@@ -85,6 +85,7 @@ export const TeleconseilRoutes = [
     "/Teleconseiller/Quick_poste",
     "/Teleconseiller/Maison_Du_citoyens",
     "/Teleconseiller/E-suuq_Prospection",
+    "/Teleconseiller/E-suuq_retard",
     "/Teleconseiller/Status_des_appels/Tous_les_Indisponibles",
     "/Teleconseiller/Bonne_reception_de_la_facture_BP",
     "/Teleconseiller/Mass_delegue",
