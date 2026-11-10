@@ -42,26 +42,103 @@ type User = {
 
 type QualificationFormData = z.infer<typeof qualificationSchema>;
 
-const questions: string[] = [
-    "1. Utilisez-vous regulierement cet ouvrage hydraulique (puits, forage, etc.) pour vos besoins en eau ?",
-    "2. A quelle distance se trouve l'ouvrage de votre domicile ?",
-    "3. Combien de fois par jour vous rendez-vous a l'ouvrage ?",
-    "4. Avez-vous rencontre des problemes techniques ou pannes sur l'ouvrage ?",
-    "5. Depuis l'installation de l'ouvrage, votre acces a l'eau s'est-il ameliore ?",
-    "6. Etes-vous satisfait(e) de la localisation de l'ouvrage ?",
-    "7. Quel est votre niveau de satisfaction general vis-a-vis de l'ouvrage ?",
-    "8. Avez-vous deja formule une plainte ou une demande d'amelioration concernant l'ouvrage ?",
-    "9. Les intrants ont-ils bien ete recus dans votre localite ?",
-    "10. Avez-vous observe des retards ou des difficultes pendant la distribution ?",
-    "11. Est-ce que tous les menages beneficiaires identifies ont bien recu les intrants ?",
-    "12. Avez-vous recu des plaintes ou des preoccupations de la part des beneficiaires ?",
-    "13. Comment les plaintes ou preoccupations sont-elles traitees dans votre localite ?",
-    "14. Selon vous, la qualite des intrants distribues etait-elle satisfaisante ?",
-    "15. Comment les beneficiaires ont-ils ete informes de la distribution ?",
-    "16. Y a-t-il eu des cas de favoritisme, de detournement ou de mauvaise gestion signales ?",
-    "17. Que recommandez-vous pour ameliorer les prochaines distributions dans votre localite ?",
-    "18. Avez-vous des suggestions pour ameliorer le mecanisme de gestion des plaintes ?",
-    "19. Quel est le niveau de satisfaction general des beneficiaires que vous avez pu observer ou entendre ?",
+const SCRIPT_INTRO = `Bonjour Monsieur/Madame,
+Je suis [Prenom], agente du service Cart'In de La Poste de Djibouti.
+Dans le cadre de notre demarche d'amelioration continue, nous realisons actuellement une enquete de satisfaction aupres de nos clients afin de recueillir leurs avis sur les prestations proposees par notre service.
+Cet echange prendra seulement quelques minutes. Vos reponses resteront confidentielles et nous permettront d'ameliorer la qualite de nos services.
+Acceptez-vous de participer a cette enquete ?`;
+
+interface QuestionDef {
+    question: string;
+    options: string[];
+}
+
+const questionnaire: QuestionDef[] = [
+    {
+        question: "1. Depuis combien de temps utilisez-vous le service Cart'In ?",
+        options: ["Premiere utilisation", "Moins de 6 mois", "Entre 6 mois et 1 an", "Plus d'un an"],
+    },
+    {
+        question: "2. A quelle frequence utilisez-vous le service Cart'In ?",
+        options: ["Tres frequemment", "Une fois par mois", "Occasionnellement", "Rarement"],
+    },
+    {
+        question: "3. Comment avez-vous connu le service Cart'In ?",
+        options: ["Reseaux sociaux", "Bouche-a-oreille", "Agence de La Poste", "Famille ou amis", "Autre"],
+    },
+    {
+        question: "4. Etes-vous satisfait(e) de la facilite d'utilisation du service Cart'In ?",
+        options: ["Tres satisfait(e)", "Satisfait(e)", "Moyennement satisfait(e)", "Pas satisfait(e)"],
+    },
+    {
+        question: "5. Trouvez-vous les informations concernant les commandes et les procedures suffisamment claires ?",
+        options: ["Oui, tout a fait", "Plutot oui", "Pas vraiment", "Non"],
+    },
+    {
+        question: "6. Etes-vous satisfait(e) de l'accompagnement fourni par les agents de Cart'In ?",
+        options: ["Tres satisfait(e)", "Satisfait(e)", "Peu satisfait(e)", "Pas satisfait(e)"],
+    },
+    {
+        question: "7. Lorsque vous contactez Cart'In pour obtenir des informations sur votre colis, recevez-vous des reponses claires et precises ?",
+        options: ["Toujours", "Souvent", "Parfois", "Jamais", "Non concerne(e)"],
+    },
+    {
+        question: "8. Comment evaluez-vous les delais de reception de vos colis ?",
+        options: ["Tres satisfaisants", "Satisfaisants", "Acceptables", "Insatisfaisants"],
+    },
+    {
+        question: "9. Avez-vous deja rencontre un retard dans la reception de votre commande ?",
+        options: ["Oui", "Non"],
+    },
+    {
+        question: "10. Si oui, avez-vous ete informe(e) du retard et de son motif ?",
+        options: ["Oui, suffisamment", "Oui, mais insuffisamment", "Non, aucune information recue", "Non concerne(e)"],
+    },
+    {
+        question: "11. Etes-vous satisfait(e) de l'etat dans lequel vous recevez vos colis ?",
+        options: ["Tres satisfait(e)", "Satisfait(e)", "Peu satisfait(e)", "Pas satisfait(e)"],
+    },
+    {
+        question: "12. Trouvez-vous que le suivi de vos commandes est suffisamment accessible et comprehensible ?",
+        options: ["Tres satisfaisant", "Satisfaisant", "Peu satisfaisant", "Pas satisfaisant"],
+    },
+    {
+        question: "13. Recevez-vous suffisamment d'informations concernant l'evolution de votre commande ?",
+        options: ["Toujours", "Souvent", "Parfois", "Jamais"],
+    },
+    {
+        question: "14. Comment appreciez-vous la disponibilite et la reactivite des agents lorsque vous sollicitez le service Cart'In ?",
+        options: ["Tres satisfaisantes", "Satisfaisantes", "Moyennes", "Insatisfaisantes", "Non concerne(e)"],
+    },
+    {
+        question: "15. Avez-vous deja rencontre un probleme avec le service Cart'In ?",
+        options: ["Oui", "Non"],
+    },
+    {
+        question: "16. Si oui, quel type de difficulte avez-vous rencontre ?",
+        options: ["Retard de livraison", "Colis non recu", "Colis endommage", "Difficultes de suivi", "Frais supplementaires ou incompris", "Difficultes de communication", "Autre"],
+    },
+    {
+        question: "17. Lorsque vous avez rencontre un probleme, avez-vous obtenu une solution satisfaisante ?",
+        options: ["Oui", "Partiellement", "Non", "Non concerne(e)"],
+    },
+    {
+        question: "18. Selon vous, quels aspects du service Cart'In devraient etre ameliores ?",
+        options: ["Ameliorer le suivi des colis", "Ameliorer la communication avec les clients", "Reduire les delais de reception", "Ameliorer la prise en charge des reclamations", "Clarifier les informations relatives aux frais et aux procedures", "Autre"],
+    },
+    {
+        question: "19. Globalement, quel est votre niveau de satisfaction concernant le service Cart'In ?",
+        options: ["Tres satisfait(e)", "Satisfait(e)", "Moyennes"],
+    },
+];
+
+const PARTIES = [
+    { label: "PARTIE A - UTILISATION DU SERVICE CART'IN", start: 0, end: 3 },
+    { label: "PARTIE B - QUALITE DU SERVICE", start: 3, end: 7 },
+    { label: "PARTIE C - DELAIS ET RECEPTION DES COLIS", start: 7, end: 11 },
+    { label: "PARTIE D - COMMUNICATION ET SUIVI DES COMMANDES", start: 11, end: 14 },
+    { label: "PARTIE E - RECLAMATIONS ET AXES D'AMELIORATION", start: 14, end: 18 },
+    { label: "PARTIE F - SATISFACTION GENERALE", start: 18, end: 19 },
 ];
 
 interface CartinEnqueterProps {
@@ -72,7 +149,7 @@ export default function CartinEnqueter({ title }: CartinEnqueterProps) {
     const { contacts, Data, setData } = useAppContext();
     const { data: session, status } = useSession();
     const [selectedContact, setSelectedContact] = useState<User | null>(null);
-    const [checkedQuestions, setCheckedQuestions] = useState<Record<string, boolean>>({});
+    const [answers, setAnswers] = useState<Record<string, string>>({});
     const [remarque, setRemarque] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -82,10 +159,10 @@ export default function CartinEnqueter({ title }: CartinEnqueterProps) {
         }
     }, [status, session?.user?.id, title]);
 
-    const handleCheckQuestion = (index: number) => {
-        setCheckedQuestions((prev) => ({
+    const handleSelectOption = (questionIndex: number, option: string) => {
+        setAnswers((prev) => ({
             ...prev,
-            [`question${index + 1}`]: !prev[`question${index + 1}`],
+            [`question${questionIndex + 1}`]: option,
         }));
     };
 
@@ -103,9 +180,9 @@ export default function CartinEnqueter({ title }: CartinEnqueterProps) {
             remarque,
         };
 
-        questions.forEach((_, index) => {
+        questionnaire.forEach((_, index) => {
             const key = `question${index + 1}`;
-            payload[key] = checkedQuestions[key] ? "Oui" : "Non";
+            payload[key] = answers[key] || "";
         });
 
         try {
@@ -120,7 +197,7 @@ export default function CartinEnqueter({ title }: CartinEnqueterProps) {
 
             if (res.ok && result.success) {
                 toast.success("Enquete enregistree avec succes !");
-                setCheckedQuestions({});
+                setAnswers({});
                 setRemarque("");
                 setData((prevContacts: User[]) =>
                     prevContacts.filter((contact: User) => contact.id !== selectedContact.id)
@@ -306,16 +383,13 @@ export default function CartinEnqueter({ title }: CartinEnqueterProps) {
                 <ScrollArea className="bg-white w-full h-[600px] md:h-[700px] rounded shadow-blue overflow-hidden max-w-full">
                     {selectedContact ? (
                         <div className="p-4">
-                            {/* Script en haut */}
-                            <h1 className="text-center capitalize p-4 text-blue font-semibold">
-                                Script
+                            {/* Script d'introduction */}
+                            <h1 className="text-center p-4 text-blue font-semibold">
+                                ENQUETE DE SATISFACTION CLIENT
                             </h1>
-                            <div className="w-full text-blue p-4 border-b border-blue/20 mb-4">
-                                {Data && Data.length > 0 ? (
-                                    <div className="break-words">{Data[0].Script}</div>
-                                ) : (
-                                    <div>Aucun script disponible.</div>
-                                )}
+                            <div className="w-full text-blue p-4 border-b border-blue/20 mb-4 bg-blue/5 rounded">
+                                <h2 className="font-semibold mb-2">1. Introduction de l&apos;appel</h2>
+                                <p className="text-sm whitespace-pre-line italic">{SCRIPT_INTRO}</p>
                             </div>
 
                             {/* Infos du client selectionne */}
@@ -326,37 +400,54 @@ export default function CartinEnqueter({ title }: CartinEnqueterProps) {
                                 <p><strong className="text-black">Localite: </strong><span className="text-blue">{selectedContact.localite}</span></p>
                             </div>
 
-                            {/* Questions a cocher */}
+                            {/* Questionnaire QCM par partie */}
                             <div className="px-4 mb-4">
-                                <h2 className="text-blue font-semibold text-lg mb-3">Questions (optionnel)</h2>
-                                <div className="space-y-3">
-                                    {questions.map((q, index) => (
-                                        <div key={index} className="flex items-start gap-3">
-                                            <Checkbox
-                                                id={`q-${index}`}
-                                                checked={!!checkedQuestions[`question${index + 1}`]}
-                                                onCheckedChange={() => handleCheckQuestion(index)}
-                                                disabled={loading}
-                                            />
-                                            <label
-                                                htmlFor={`q-${index}`}
-                                                className="text-sm text-black cursor-pointer leading-5"
-                                            >
-                                                {q}
-                                            </label>
-                                        </div>
-                                    ))}
-                                </div>
+                                <h2 className="text-blue font-semibold text-lg mb-3">2. Questionnaire de satisfaction</h2>
+                                {PARTIES.map((partie) => (
+                                    <div key={partie.label} className="mb-5">
+                                        <h3 className="text-blue font-bold text-sm mb-3 bg-blue/10 p-2 rounded">
+                                            {partie.label}
+                                        </h3>
+                                        {questionnaire.slice(partie.start, partie.end).map((q, idx) => {
+                                            const globalIdx = partie.start + idx;
+                                            const key = `question${globalIdx + 1}`;
+                                            return (
+                                                <div key={globalIdx} className="mb-4">
+                                                    <p className="font-medium text-black text-sm mb-2">{q.question}</p>
+                                                    <div className="space-y-1 pl-4">
+                                                        {q.options.map((option) => (
+                                                            <label
+                                                                key={option}
+                                                                className="flex items-center gap-2 cursor-pointer text-sm text-black hover:text-blue"
+                                                            >
+                                                                <input
+                                                                    type="radio"
+                                                                    name={key}
+                                                                    value={option}
+                                                                    checked={answers[key] === option}
+                                                                    onChange={() => handleSelectOption(globalIdx, option)}
+                                                                    disabled={loading}
+                                                                    className="accent-blue-700"
+                                                                />
+                                                                {option}
+                                                            </label>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ))}
                             </div>
 
-                            {/* Champ remarque */}
+                            {/* Champ remarque / commentaire pour Q19 */}
                             <div className="px-4 mb-4">
-                                <label className="block text-blue font-semibold mb-2">Remarque</label>
+                                <label className="block text-blue font-semibold mb-2">Description / Commentaire</label>
                                 <textarea
                                     value={remarque}
                                     onChange={(e) => setRemarque(e.target.value)}
                                     className="shadow border rounded-[10px] border-blue w-full py-2 px-3 text-blue mb-3 leading-tight focus:outline-none focus:shadow-outline min-h-[80px]"
-                                    placeholder="Ajoutez une remarque..."
+                                    placeholder="Ajoutez un commentaire..."
                                     disabled={loading}
                                 />
                             </div>
