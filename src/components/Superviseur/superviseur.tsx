@@ -14,6 +14,7 @@ const Menu = [
     { title: "Répartition des Contacts", icon: <LayoutList />, link: "/Superviseur/Repartition_des_Contacts" },
     { title: "Agents", icon: <Users />, link: "/Superviseur/Agents" },
     { title: "Mass Enqueter", icon: <Handshake />, link: "/Superviseur/Mass" },
+    { title: "Cartin Enqueter", icon: <Handshake />, link: "/Superviseur/Cartin_enqueter" },
     { title: "Affectation Mass deleguer", icon: <ArrowRight />, link: "/Superviseur/Affectation_Mass_deleguer" },
     { title: "Compagner", icon: <Megaphone />, link: "/Superviseur/Compagner" },
     { title: "Donne importer", icon: <Database />, link: "/Superviseur/Donne_importer" },

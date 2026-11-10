@@ -11,6 +11,7 @@ import SupQuickPoste from "./SupQuickPoste";
 import Repartition_des_contacts from "./Repartition_des_Contacts";
 import Historique from "./Historique";
 import Mass from "./Mass";
+import CartinEnqueteSup from "./CartinEnqueteSup";
 import Affectation_Mass_deleguer from "./Affectation_Mass_deleguer";
 
 export default function SupContent() {
@@ -77,6 +78,10 @@ export default function SupContent() {
             {/* // Mass  */}
             {path && path === "/Superviseur/Mass" && (
                 <Mass />
+            )}
+            {/* // Cartin Enqueter  */}
+            {path && path === "/Superviseur/Cartin_enqueter" && (
+                <CartinEnqueteSup />
             )}
             {/* // Affectation Mass delguer  */}
             {path && path === "/Superviseur/Affectation_Mass_deleguer" && (
