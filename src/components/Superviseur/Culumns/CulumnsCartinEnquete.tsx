@@ -9,25 +9,25 @@ export type CartinEnqueteData = {
     id: string;
     Nom: string;
     Telephone: number;
-    question1: string;
-    question2: string;
-    question3: string;
-    question4: string;
-    question5: string;
-    question6: string;
-    question7: string;
-    question8: string;
-    question9: string;
-    question10: string;
-    question11: string;
-    question12: string;
-    question13: string;
-    question14: string;
-    question15: string;
-    question16: string;
-    question17: string;
-    question18: string;
-    question19: string;
+    q1: string;
+    q2: string;
+    q3: string;
+    q4: string;
+    q5: string;
+    q6: string;
+    q7: string;
+    q8: string;
+    q9: string;
+    q10: string;
+    q11: string;
+    q12: string;
+    q13: string;
+    q14: string;
+    q15: string;
+    q16: string;
+    q17: string;
+    q18: string;
+    q19: string;
     remarque: string;
     date_enregistrement: string;
     agent: string;
@@ -73,79 +73,79 @@ export const CartinEnqueteSupColumns: ColumnDef<CartinEnqueteData>[] = [
         header: "Telephone",
     },
     {
-        accessorKey: "question1",
+        accessorKey: "q1",
         header: "Duree utilisation",
     },
     {
-        accessorKey: "question2",
+        accessorKey: "q2",
         header: "Frequence utilisation",
     },
     {
-        accessorKey: "question3",
+        accessorKey: "q3",
         header: "Decouverte service",
     },
     {
-        accessorKey: "question4",
+        accessorKey: "q4",
         header: "Facilite utilisation",
     },
     {
-        accessorKey: "question5",
+        accessorKey: "q5",
         header: "Clarte informations",
     },
     {
-        accessorKey: "question6",
+        accessorKey: "q6",
         header: "Accompagnement agents",
     },
     {
-        accessorKey: "question7",
+        accessorKey: "q7",
         header: "Reponses claires",
     },
     {
-        accessorKey: "question8",
+        accessorKey: "q8",
         header: "Delais reception",
     },
     {
-        accessorKey: "question9",
+        accessorKey: "q9",
         header: "Retard rencontre",
     },
     {
-        accessorKey: "question10",
+        accessorKey: "q10",
         header: "Info retard",
     },
     {
-        accessorKey: "question11",
+        accessorKey: "q11",
         header: "Etat colis",
     },
     {
-        accessorKey: "question12",
+        accessorKey: "q12",
         header: "Suivi commandes",
     },
     {
-        accessorKey: "question13",
+        accessorKey: "q13",
         header: "Info evolution",
     },
     {
-        accessorKey: "question14",
+        accessorKey: "q14",
         header: "Disponibilite agents",
     },
     {
-        accessorKey: "question15",
+        accessorKey: "q15",
         header: "Probleme rencontre",
     },
     {
-        accessorKey: "question16",
+        accessorKey: "q16",
         header: "Type difficulte",
     },
     {
-        accessorKey: "question17",
+        accessorKey: "q17",
         header: "Solution obtenue",
     },
     {
-        accessorKey: "question18",
+        accessorKey: "q18",
         header: "Axes amelioration",
     },
     {
-        accessorKey: "question19",
+        accessorKey: "q19",
         header: "Satisfaction generale",
     },
     {
@@ -154,7 +154,7 @@ export const CartinEnqueteSupColumns: ColumnDef<CartinEnqueteData>[] = [
     },
     {
         accessorKey: "date_enregistrement",
-        header: "Date enregistrement",
+        header: "Date",
     },
     {
         accessorKey: "agent",
