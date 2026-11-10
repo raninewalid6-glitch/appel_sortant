@@ -96,7 +96,7 @@ export default function CartinEnqueter({ title }: CartinEnqueterProps) {
             return;
         }
 
-        const api = `http://192.168.100.4:8080/Vox_Backend//api.php?method=EnregistrementEnquet&iduser=${id}`;
+        const api = `http://192.168.100.4:8080/Vox_Backend//api.php?method=EnregistrementCartinEnquet&iduser=${id}`;
 
         const payload: Record<string, string> = {
             id_contact: selectedContact.id,
