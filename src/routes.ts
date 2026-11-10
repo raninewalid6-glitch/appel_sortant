@@ -89,6 +89,7 @@ export const TeleconseilRoutes = [
     "/Teleconseiller/Status_des_appels/Tous_les_Indisponibles",
     "/Teleconseiller/Bonne_reception_de_la_facture_BP",
     "/Teleconseiller/Mass_delegue",
+    "/Teleconseiller/Cartin_enqueter",
 ];
 
 /**

@@ -59,6 +59,21 @@ export default function Content({ title }: TitleProps) {
             ) : path === "/Teleconseiller/Status_des_appels/Tous_les_Indisponibles" ? (
                 <TousLesIndisponibles />
             ) : path === "/Teleconseiller/Mass" ? (
+                <div className="bg-white w-full h-max rounded p-4 shadow-blue">
+                    <h1 className="text-center capitalize p-4 text-blue font-semibold">
+                        Liste de contacts
+                    </h1>
+
+                    {status === "loading" ? (
+                        <div className="flex justify-center items-center">
+                            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-slate-500 border-solid border-transparent"></div>
+                            <small className="ml-2">Chargement...</small>
+                        </div>
+                    ) : (
+                        <DataTable data={Data} columns={Masscolumns} typeName="Nom" />
+                    )}
+                </div>
+            ) : path === "/Teleconseiller/Cartin_enqueter" ? (
                 <CartinEnqueter title={title} />
             ) : (
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
