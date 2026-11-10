@@ -40,14 +40,14 @@ const CartinEnqueteSup = () => {
     }, []);
 
     return (
-        <div className="w-full rounded-md bg-white p-4">
-            <ScrollArea className="w-full">
+        <div className="w-full rounded-md bg-white p-4 overflow-x-auto">
+            <div className="min-w-[2500px]">
                 {loading ? (
                     <p className="text-center">Chargement...</p>
                 ) : (
                     <DataTable data={data} columns={CartinEnqueteSupColumns} typeName="Nom" />
                 )}
-            </ScrollArea>
+            </div>
         </div>
     );
 };
