@@ -25,9 +25,6 @@ export type CartinEnqueteData = {
     q14: string;
     q15: string;
     q16: string;
-    q17: string;
-    q18: string;
-    q19: string;
     remarque: string;
     date_enregistrement: string;
     agent: string;
@@ -98,54 +95,42 @@ export const CartinEnqueteSupColumns: ColumnDef<CartinEnqueteData>[] = [
     },
     {
         accessorKey: "q7",
-        header: "Reponses claires",
-    },
-    {
-        accessorKey: "q8",
         header: "Delais reception",
     },
     {
-        accessorKey: "q9",
+        accessorKey: "q8",
         header: "Retard rencontre",
     },
     {
-        accessorKey: "q10",
+        accessorKey: "q9",
         header: "Info retard",
     },
     {
-        accessorKey: "q11",
+        accessorKey: "q10",
         header: "Etat colis",
     },
     {
-        accessorKey: "q12",
-        header: "Suivi commandes",
-    },
-    {
-        accessorKey: "q13",
+        accessorKey: "q11",
         header: "Info evolution",
     },
     {
-        accessorKey: "q14",
-        header: "Disponibilite agents",
-    },
-    {
-        accessorKey: "q15",
+        accessorKey: "q12",
         header: "Probleme rencontre",
     },
     {
-        accessorKey: "q16",
+        accessorKey: "q13",
         header: "Type difficulte",
     },
     {
-        accessorKey: "q17",
+        accessorKey: "q14",
         header: "Solution obtenue",
     },
     {
-        accessorKey: "q18",
+        accessorKey: "q15",
         header: "Axes amelioration",
     },
     {
-        accessorKey: "q19",
+        accessorKey: "q16",
         header: "Satisfaction generale",
     },
     {

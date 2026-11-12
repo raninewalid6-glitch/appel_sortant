@@ -56,7 +56,7 @@ interface QuestionDef {
 const questionnaire: QuestionDef[] = [
     {
         question: "1. Depuis combien de temps utilisez-vous le service Cart'In ?",
-        options: ["Premiere utilisation", "Moins de 6 mois", "Entre 6 mois et 1 an", "Plus d'un an"],
+        options: ["Premiere utilisation", "Entre 2 et 6 mois", "Entre 6 mois et 1 an", "Plus d'un an"],
     },
     {
         question: "2. A quelle frequence utilisez-vous le service Cart'In ?",
@@ -67,7 +67,7 @@ const questionnaire: QuestionDef[] = [
         options: ["Reseaux sociaux", "Bouche-a-oreille", "Agence de La Poste", "Famille ou amis", "Autre"],
     },
     {
-        question: "4. Etes-vous satisfait(e) de la facilite d'utilisation du service Cart'In ?",
+        question: "4. Etes-vous satisfait(e) de la facilite d'utilisation du service application Cart'In ?",
         options: ["Tres satisfait(e)", "Satisfait(e)", "Moyennement satisfait(e)", "Pas satisfait(e)"],
     },
     {
@@ -79,66 +79,54 @@ const questionnaire: QuestionDef[] = [
         options: ["Tres satisfait(e)", "Satisfait(e)", "Peu satisfait(e)", "Pas satisfait(e)"],
     },
     {
-        question: "7. Lorsque vous contactez Cart'In pour obtenir des informations sur votre colis, recevez-vous des reponses claires et precises ?",
-        options: ["Toujours", "Souvent", "Parfois", "Jamais", "Non concerne(e)"],
-    },
-    {
-        question: "8. Comment evaluez-vous les delais de reception de vos colis ?",
+        question: "7. Comment evaluez-vous les delais de reception de vos colis ?",
         options: ["Tres satisfaisants", "Satisfaisants", "Acceptables", "Insatisfaisants"],
     },
     {
-        question: "9. Avez-vous deja rencontre un retard dans la reception de votre commande ?",
+        question: "8. Avez-vous deja rencontre un retard dans la reception de votre commande ?",
         options: ["Oui", "Non"],
     },
     {
-        question: "10. Si oui, avez-vous ete informe(e) du retard et de son motif ?",
+        question: "9. Si oui, avez-vous ete informe(e) du retard et de son motif ?",
         options: ["Oui, suffisamment", "Oui, mais insuffisamment", "Non, aucune information recue", "Non concerne(e)"],
     },
     {
-        question: "11. Etes-vous satisfait(e) de l'etat dans lequel vous recevez vos colis ?",
+        question: "10. Etes-vous satisfait(e) de l'etat dans lequel vous recevez vos colis ?",
         options: ["Tres satisfait(e)", "Satisfait(e)", "Peu satisfait(e)", "Pas satisfait(e)"],
     },
     {
-        question: "12. Trouvez-vous que le suivi de vos commandes est suffisamment accessible et comprehensible ?",
-        options: ["Tres satisfaisant", "Satisfaisant", "Peu satisfaisant", "Pas satisfaisant"],
-    },
-    {
-        question: "13. Recevez-vous suffisamment d'informations concernant l'evolution de votre commande ?",
+        question: "11. Recevez-vous suffisamment d'informations concernant l'evolution de votre commande ?",
         options: ["Toujours", "Souvent", "Parfois", "Jamais"],
     },
     {
-        question: "14. Comment appreciez-vous la disponibilite et la reactivite des agents lorsque vous sollicitez le service Cart'In ?",
-        options: ["Tres satisfaisantes", "Satisfaisantes", "Moyennes", "Insatisfaisantes", "Non concerne(e)"],
-    },
-    {
-        question: "15. Avez-vous deja rencontre un probleme avec le service Cart'In ?",
+        question: "12. Avez-vous deja rencontre un probleme avec le service Cart'In ?",
         options: ["Oui", "Non"],
     },
     {
-        question: "16. Si oui, quel type de difficulte avez-vous rencontre ?",
+        question: "13. Si oui, quel type de difficulte avez-vous rencontre ?",
         options: ["Retard de livraison", "Colis non recu", "Colis endommage", "Difficultes de suivi", "Frais supplementaires ou incompris", "Difficultes de communication", "Autre"],
     },
     {
-        question: "17. Lorsque vous avez rencontre un probleme, avez-vous obtenu une solution satisfaisante ?",
+        question: "14. Lorsque vous avez rencontre un probleme, avez-vous obtenu une solution satisfaisante ?",
         options: ["Oui", "Partiellement", "Non", "Non concerne(e)"],
     },
     {
-        question: "18. Selon vous, quels aspects du service Cart'In devraient etre ameliores ?",
+        question: "15. Selon vous, quels aspects du service Cart'In devraient etre ameliores ?",
         options: ["Ameliorer le suivi des colis", "Ameliorer la communication avec les clients", "Reduire les delais de reception", "Ameliorer la prise en charge des reclamations", "Clarifier les informations relatives aux frais et aux procedures", "Autre"],
     },
     {
-        question: "19. Globalement, quel est votre niveau de satisfaction concernant le service Cart'In ?",
-        options: ["Tres satisfait(e)", "Satisfait(e)", "Moyennes"],
+        question: "16. Globalement, quel est votre niveau de satisfaction concernant le service Cart'In ?",
+        options: ["Tres satisfait(e)", "Satisfait(e)", "Moyennes", "Peu satisfait(e)", "Pas satisfait(e)"],
     },
 ];
 
 const PARTIES = [
     { label: "PARTIE A - UTILISATION DU SERVICE CART'IN", start: 0, end: 3 },
-    { label: "PARTIE B - QUALITE DU SERVICE", start: 3, end: 7 },
-    { label: "PARTIE C - DELAIS ET RECEPTION DES COLIS", start: 7, end: 11 },
-    { label: "PARTIE D - COMMUNICATION ET SUIVI DES COMMANDES", start: 11, end: 14 },
-    { label: "PARTIE E - RECLAMATIONS ET AXES D'AMELIORATION", start: 14, end: 18 },
-    { label: "PARTIE F - SATISFACTION GENERALE", start: 18, end: 19 },
+    { label: "PARTIE B - QUALITE DU SERVICE", start: 3, end: 6 },
+    { label: "PARTIE C - DELAIS ET RECEPTION DES COLIS", start: 6, end: 10 },
+    { label: "PARTIE D - COMMUNICATION ET SUIVI DES COMMANDES", start: 10, end: 11 },
+    { label: "PARTIE E - RECLAMATIONS ET AXES D'AMELIORATION", start: 11, end: 15 },
+    { label: "PARTIE F - SATISFACTION GENERALE", start: 15, end: 16 },
 ];
 
 interface CartinEnqueterProps {
