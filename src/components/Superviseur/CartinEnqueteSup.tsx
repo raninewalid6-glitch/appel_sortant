@@ -67,6 +67,16 @@ const CartinEnqueteSup = () => {
 
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.json_to_sheet(exportData);
+
+        const headers = Object.keys(exportData[0] || {});
+        ws["!cols"] = headers.map((header) => {
+            const maxDataLen = exportData.reduce((max, row) => {
+                const val = String(row[header as keyof typeof row] ?? "");
+                return Math.max(max, val.length);
+            }, header.length);
+            return { wch: maxDataLen + 4 };
+        });
+
         XLSX.utils.book_append_sheet(wb, ws, "Cartin Enquetes");
         XLSX.writeFile(wb, "Cartin_Enquetes.xlsx");
     };
