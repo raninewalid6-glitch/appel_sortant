@@ -18,6 +18,7 @@ import { Masscolumns } from "./MassCol";
 import MassDelguer from "./MassDelguer";
 import ColisRetour from "./comonents/ColisRetour";
 import CartinEnqueter from "./CartinEnqueter";
+import { BonneReceptionColumns } from "./BonneReceptionCol";
 
 // Titre dynamique
 interface TitleProps {
@@ -75,6 +76,36 @@ export default function Content({ title }: TitleProps) {
                 </div>
             ) : path === "/Teleconseiller/Cartin_enqueter" ? (
                 <CartinEnqueter title={title} />
+            ) : path === "/Teleconseiller/Bonne_reception_de_la_facture_BP" ? (
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div className="bg-white w-full h-max rounded p-4 shadow-blue max-w-full overflow-hidden">
+                        <h1 className="text-center capitalize p-4 text-blue font-semibold">
+                            Liste de contacts
+                        </h1>
+
+                        {status === "loading" ? (
+                            <div className="flex justify-center items-center">
+                                <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-slate-500 border-solid border-transparent"></div>
+                                <small className="ml-2">Chargement...</small>
+                            </div>
+                        ) : (
+                            <DataTable data={Data} columns={BonneReceptionColumns} typeName="Nom" />
+                        )}
+                    </div>
+
+                    <ScrollArea className="bg-white w-full h-[360px] md:h-[446px] rounded shadow-blue overflow-hidden max-w-full">
+                        <h1 className="text-center capitalize p-4 text-blue font-semibold">
+                            Script
+                        </h1>
+                        <div className="w-full h-full text-blue p-4">
+                            {Data && Data.length > 0 ? (
+                                <div className="break-words">{Data[0].Script}</div>
+                            ) : (
+                                <div>Il n&apos;y a aucun contact pour le moment.</div>
+                            )}
+                        </div>
+                    </ScrollArea>
+                </div>
             ) : (
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                     <div className="bg-white w-full h-max rounded p-4 shadow-blue max-w-full overflow-hidden">

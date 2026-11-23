@@ -1,0 +1,215 @@
+"use client";
+
+import { ColumnDef, Row } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { FormSucces } from "../FormSucces";
+import { FormError } from "../FormError";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { qualificationSchema } from "@/Schemas";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { useAppContext } from "../context/AppContext";
+
+type QualificationFormData = z.infer<typeof qualificationSchema>;
+
+export type BonneReceptionUser = {
+    id: string;
+    Nom: string;
+    Telephone: number;
+    Nombre_colis: string;
+    commande: string;
+    Poids: string;
+    Bp: string;
+    Frais_Postaux: string;
+    Frais_Douane: string;
+    Provenance: string;
+    Reference: string;
+    Adresse: string;
+    localite: string;
+    Etage: string;
+    Date_Abonnement: string;
+    Date_Enregistrement: string;
+    Script: string;
+};
+
+function BonneReceptionActionCell({ row }: { row: Row<BonneReceptionUser> }) {
+    const user = row.original;
+    const { onSubmit, successMessage, errorMessage, isPending } = useAppContext();
+    const form = useForm<QualificationFormData>({
+        resolver: zodResolver(qualificationSchema),
+        defaultValues: {
+            qualifier: "",
+            commentaire: "",
+        },
+    });
+
+    return (
+        <div className="flex gap-2">
+            <Dialog>
+                <DialogTrigger className="w-full bg-blue text-blanc hover:bg-blue/90 hover:text-blanc duration-500 rounded-lg p-1">
+                    Qualifier
+                </DialogTrigger>
+                <DialogContent className="bg-blanc">
+                    <DialogHeader>
+                        <DialogTitle className="text-blue text-2xl mb-1 ml-[15%]">Qualification</DialogTitle>
+                    </DialogHeader>
+                    <DialogDescription>
+                        <div className="w-full max-w-xs mx-auto">
+                            <Form {...form}>
+                                <form onSubmit={form.handleSubmit((values) => onSubmit(values, user.id))}>
+                                    <div className="mb-4">
+                                        <FormField
+                                            control={form.control}
+                                            name="qualifier"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-blue py-4">Qualifier</FormLabel>
+                                                    <FormControl>
+                                                        <Select {...field} onValueChange={(value) => field.onChange(value)} disabled={isPending}>
+                                                            <SelectTrigger className="shadow border border-blue rounded-[10px] w-full py-2 px-3 text-blue leading-tight focus:outline-none focus:shadow-outline">
+                                                                <SelectValue placeholder="Selectionner une qualification" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                <SelectItem value="indisponible">Indisponible</SelectItem>
+                                                                <SelectItem value="abouti">Abouti</SelectItem>
+                                                                <SelectItem value="repondu">Repondu</SelectItem>
+                                                                <SelectItem value="rappeller">Rappeler</SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <FormField
+                                            control={form.control}
+                                            name="commentaire"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-blue">Commentaire</FormLabel>
+                                                    <FormControl>
+                                                        <textarea
+                                                            {...field}
+                                                            className="shadow border rounded-[10px] border-blue w-full py-2 px-3 text-blue mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                                                            placeholder="Commentaire"
+                                                            disabled={isPending}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <FormSucces message={successMessage} />
+                                        <FormError message={errorMessage} />
+                                    </div>
+                                    <div className="flex items-center">
+                                        <button className="bg-blue hover:bg-blue/80 text-white font-bold py-2 px-4 rounded-[10px] w-full focus:outline-none focus:shadow-outline" type="submit" disabled={isPending}>
+                                            Enregistrer
+                                        </button>
+                                    </div>
+                                </form>
+                            </Form>
+                        </div>
+                    </DialogDescription>
+                </DialogContent>
+            </Dialog>
+        </div>
+    );
+}
+
+export const BonneReceptionColumns: ColumnDef<BonneReceptionUser>[] = [
+    {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
+                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    {
+        accessorKey: "Nom",
+        header: ({ column }) => (
+            <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                Nom
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+    },
+    {
+        accessorKey: "Telephone",
+        header: "Telephone",
+    },
+    {
+        accessorKey: "Bp",
+        header: "Boite Postale",
+    },
+    {
+        accessorKey: "Adresse",
+        header: "Adresse / Localisation",
+    },
+    {
+        accessorKey: "Etage",
+        header: "Etage / Nom de porte",
+    },
+    {
+        accessorKey: "Nombre_colis",
+        header: "Nombre colis",
+    },
+    {
+        accessorKey: "Poids",
+        header: "Poid",
+    },
+    {
+        accessorKey: "Provenance",
+        header: "Provenance",
+    },
+    {
+        accessorKey: "Reference",
+        header: "Reference",
+    },
+    {
+        accessorKey: "commande",
+        header: "Commande",
+    },
+    {
+        accessorKey: "Frais_Postaux",
+        header: "Frais postaux",
+    },
+    {
+        accessorKey: "Frais_Douane",
+        header: "Frais Douane",
+    },
+    {
+        accessorKey: "Date_Abonnement",
+        header: "Date Abonnement",
+    },
+    {
+        accessorKey: "Date_Enregistrement",
+        header: "Date",
+    },
+    {
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => <BonneReceptionActionCell row={row} />,
+    },
+];
