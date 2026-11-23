@@ -23,6 +23,7 @@ export type Report = {
     commande: string;
     Telephone: number;
     Adresse: string;
+    Etage: string;
     region: string;
     localite: string;
     Nombre_colis: string;
@@ -88,6 +89,10 @@ export const ReportColumns: ColumnDef<Report>[] = [
     {
         accessorKey: "Adresse",
         header: "Adresse",
+    },
+    {
+        accessorKey: "Etage",
+        header: "Etage / Nom de porte",
     },
     {
         accessorKey: "region",
