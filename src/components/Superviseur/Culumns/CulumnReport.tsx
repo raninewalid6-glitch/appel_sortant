@@ -92,7 +92,7 @@ export const ReportColumns: ColumnDef<Report>[] = [
     },
     {
         accessorKey: "Etage",
-        header: "Etage / Nom de porte",
+        header: "Etage/Nom de porte",
     },
     {
         accessorKey: "region",
