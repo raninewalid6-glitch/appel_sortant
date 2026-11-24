@@ -31,6 +31,7 @@ export type User = {
     Provenance: string,
     Reference: string,
     Adresse: string,
+    localite: string,
     Date_Abonnement: string,
     Date_Enregistrement	: string,
     Script: string;
@@ -185,6 +186,10 @@ export const columns: ColumnDef<User>[] = [
     {
         accessorKey: "Adresse",
         header: "Adresse",
+    },
+    {
+        accessorKey: "localite",
+        header: "Localite",
     },
     {
         accessorKey: "Frais_Postaux",
