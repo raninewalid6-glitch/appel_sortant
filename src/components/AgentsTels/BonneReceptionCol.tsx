@@ -164,14 +164,6 @@ export const BonneReceptionColumns: ColumnDef<BonneReceptionUser>[] = [
         header: "Boite Postale",
     },
     {
-        accessorKey: "Adresse",
-        header: "Adresse / Localisation",
-    },
-    {
-        accessorKey: "Etage",
-        header: "Etage / Nom de porte",
-    },
-    {
         accessorKey: "Nombre_colis",
         header: "Nombre colis",
     },
