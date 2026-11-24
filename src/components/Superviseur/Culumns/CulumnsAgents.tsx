@@ -34,6 +34,7 @@ export type Agents = {
     Email: string;
     Telephone: number;
     Adresse: string;
+    Etage: string;
     Password: string;
     Role: string;
 };
@@ -310,6 +311,10 @@ export const AgentsColumns: ColumnDef<Agents>[] = [
     {
         accessorKey: "Adresse",
         header: "Adresse",
+    },
+    {
+        accessorKey: "Etage",
+        header: "Etage/Nom de porte",
     },
     {
         id: "actions",

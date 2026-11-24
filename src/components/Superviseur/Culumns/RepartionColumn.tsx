@@ -21,6 +21,7 @@ export type Repartition = {
     Nom: string;
     Telephone: number;
     Adresse: string;
+    Etage: string;
     Nombre_colis: string;
     Poids: string;
     Frais_Postaux: string;
@@ -75,6 +76,10 @@ export const RepartitionColumns: ColumnDef<Repartition>[] = [
     {
         accessorKey: "Adresse",
         header: "Adresse",
+    },
+    {
+        accessorKey: "Etage",
+        header: "Etage/Nom de porte",
     },
     {
         accessorKey: "Nombre_colis",

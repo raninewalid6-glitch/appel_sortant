@@ -42,6 +42,7 @@ export type ImportedData = {
     Date_Abonnement: string;
     Nationaliter: string;
     Adresse: string;
+    Etage: string;
 };
 
 function ImportedActionsCell({ row }: { row: Row<ImportedData> }) {
@@ -357,6 +358,7 @@ export const ImportedColumns: ColumnDef<ImportedData>[] = [
     { accessorKey: "localite", header: "localite" },
     { accessorKey: "region", header: "region" },
     { accessorKey: "Adresse", header: "Adresse" },
+    { accessorKey: "Etage", header: "Etage/Nom de porte" },
     { accessorKey: "Provenance", header: "Provenance" },
     { accessorKey: "Date_Enregistrement", header: "Date Enregistrement" },
     { accessorKey: "Nombre_colis", header: "Nombre colis" },
