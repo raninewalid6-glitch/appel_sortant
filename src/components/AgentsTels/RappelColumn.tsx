@@ -30,6 +30,7 @@ export type Rappel = {
   Frais_Douane: string,
   Provenance: string,
   Adresse: string,
+  Etage: string,
   Date_Abonnement: string,
   Date_appel: string,
   Script: string;
@@ -250,6 +251,10 @@ export const RappelColumn: ColumnDef<Rappel>[] = [
   {
     accessorKey: "Adresse",
     header: "Adresse",
+  },
+  {
+    accessorKey: "Etage",
+    header: "Etage/Nom de porte",
   },
   {
     accessorKey: "Frais_Postaux",
