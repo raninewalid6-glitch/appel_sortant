@@ -184,6 +184,10 @@ export const BonneReceptionColumns: ColumnDef<BonneReceptionUser>[] = [
         header: "Commande",
     },
     {
+        accessorKey: "localite",
+        header: "Localite",
+    },
+    {
         accessorKey: "Frais_Postaux",
         header: "Frais postaux",
     },
